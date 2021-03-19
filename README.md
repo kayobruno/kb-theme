@@ -1,1 +1,1 @@
-# wp-oop
+# KB_Theme
