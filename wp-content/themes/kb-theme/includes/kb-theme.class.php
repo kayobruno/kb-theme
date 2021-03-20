@@ -60,6 +60,7 @@ class KB_Theme {
             "includes/kb-theme-post-type.class.php",
             "includes/kb-theme-taxonomy.class.php",
             "includes/kb-theme-setup.class.php",
+            "includes/kb-theme-utils.class.php",
         );
 
         array_walk($required_classes, array($this, 'load_file'));
