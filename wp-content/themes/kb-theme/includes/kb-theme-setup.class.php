@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class KB_Theme_Setup
+ * @author Kayo Bruno <kayodw@gmail.com>
+ */
 class KB_Theme_Setup {
 
     public function theme_setup()

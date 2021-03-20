@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class KB_Theme_Utils
+ * @author Kayo Bruno <kayodw@gmail.com>
+ */
 class KB_Theme_Utils {
 
     /**

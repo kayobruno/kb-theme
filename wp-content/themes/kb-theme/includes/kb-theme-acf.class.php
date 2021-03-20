@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class KB_Theme_Acf
+ * @author Kayo Bruno <kayodw@gmail.com>
+ */
 class KB_Theme_Acf {
 
     public function init_acf()
