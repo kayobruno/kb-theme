@@ -20,6 +20,13 @@ class KB_Theme_Setup {
         }
     }
 
+    public function show_meta_tags()
+    {
+        if (file_exists(get_template_directory() . '/partials/head/meta-tags.php')) {
+            require get_template_directory() . '/partials/head/meta-tags.php';
+        }
+    }
+
     private function default_theme_configuration()
     {
         add_theme_support('automatic-feed-links');

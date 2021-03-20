@@ -206,6 +206,11 @@ class KB_Theme {
                 'component' => new KB_Theme_Setup(),
                 'callback' => 'show_thumbnail_in_list',
             ),
+            array(
+                'hook' => 'wp_head',
+                'component' => new KB_Theme_Setup(),
+                'callback' => 'show_meta_tags',
+            ),
         );
 
         $filters = array(
