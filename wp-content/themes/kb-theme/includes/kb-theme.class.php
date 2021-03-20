@@ -26,6 +26,8 @@ class KB_Theme {
         $this->loader = $loader;
         $this->load_required_classes();
         $this->init_theme();
+        $this->run_actions();
+        $this->run_filters();
     }
 
     /**
@@ -45,8 +47,7 @@ class KB_Theme {
         $this->define_post_types();
         $this->define_taxonomies();
         $this->define_setup();
-        $this->define_actions();
-        $this->define_filters();
+        $this->define_acf();
     }
 
     /**
@@ -61,6 +62,7 @@ class KB_Theme {
             "includes/kb-theme-taxonomy.class.php",
             "includes/kb-theme-setup.class.php",
             "includes/kb-theme-utils.class.php",
+            "includes/kb-theme-acf.class.php",
         );
 
         array_walk($required_classes, array($this, 'load_file'));
@@ -115,7 +117,7 @@ class KB_Theme {
     /**
      * Registra todas as actions no WordPress
      */
-    private function define_actions()
+    private function run_actions()
     {
         array_walk(
             $this->actions,
@@ -136,7 +138,7 @@ class KB_Theme {
     /**
      * Registra todos os filters no WordPress
      */
-    private function define_filters()
+    private function run_filters()
     {
         array_walk(
             $this->filters,
@@ -223,5 +225,21 @@ class KB_Theme {
 
         $this->set_actions($actions);
         $this->set_filters($filters);
+    }
+
+    /**
+     * Registra as configurações extras do ACF
+     */
+    public function define_acf()
+    {
+        $actions = array(
+            array(
+                'hook' => 'acf/init',
+                'component' => new KB_Theme_Acf(),
+                'callback' => 'init_acf',
+            ),
+        );
+
+        $this->set_actions($actions);
     }
 }
