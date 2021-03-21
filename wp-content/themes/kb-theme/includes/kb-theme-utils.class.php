@@ -80,4 +80,26 @@ class KB_Theme_Utils {
             $url
         );
     }
+
+    /**
+     * Retorna thumbnail do post, caso o mesmo não tenha thumb cadastrada a imagem de placeholder será utilizada
+     *
+     * @param int|null $post_id
+     * @param string $size
+     * @return false|mixed|string
+     */
+    public static function thumbnail(int $post_id = null, string $size = 'post-thumbnail')
+    {
+        if (null === $post_id) {
+            global $post;
+            $post_id = $post->ID;
+        }
+
+        $thumbnail = get_the_post_thumbnail_url($post_id, $size);
+        if (!has_post_thumbnail($post_id) && function_exists('get_field')) {
+            $thumbnail = get_field('placeholder', 'options');
+        }
+
+        return $thumbnail;
+    }
 }
