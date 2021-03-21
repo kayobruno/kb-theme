@@ -11,11 +11,17 @@
  */
 
 get_header();
-?>
 
-    <main id="site-content" role="main">
+if (have_posts()) {
+    while (have_posts()) {
+        the_post();
+        get_template_part('template-parts/content/content', 'post');
+    }
 
-    </main>
+    get_template_part('template-parts/pagination/pagination', 'list');
 
-<?php
+} else {
+    get_template_part('template-parts/content/content', 'none');
+}
+
 get_footer();
