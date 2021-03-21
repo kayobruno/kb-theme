@@ -151,6 +151,14 @@ class KB_Theme_Acf {
                         'type' => 'text',
                         'placeholder' => 'XX-XXXXXX',
                     ),
+                    array(
+                        'key' => 'facebook_pixel',
+                        'label' => 'Facebook Pixel',
+                        'name' => 'facebook_pixel',
+                        'type' => 'text',
+                        'instructions' => 'Informe apenas o número',
+                        'placeholder' => '00000000000000',
+                    ),
                 ),
                 'location' => array(
                     array(

@@ -215,12 +215,7 @@ class KB_Theme {
             array(
                 'hook' => 'wp_head',
                 'component' => new KB_Theme_Setup(),
-                'callback' => 'show_meta_tags',
-            ),
-            array(
-                'hook' => 'wp_head',
-                'component' => new KB_Theme_Setup(),
-                'callback' => 'show_analytics',
+                'callback' => 'setup_metrics_and_custom_tags',
             ),
         );
 

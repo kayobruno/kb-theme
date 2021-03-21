@@ -24,17 +24,31 @@ class KB_Theme_Setup {
         }
     }
 
-    public function show_meta_tags()
+    public function setup_metrics_and_custom_tags()
+    {
+        $this->show_meta_tags();
+        $this->show_analytics();
+        $this->show_facebook_pixel();
+    }
+
+    private function show_meta_tags()
     {
         if (file_exists(get_template_directory() . '/partials/head/meta-tags.php')) {
             require get_template_directory() . '/partials/head/meta-tags.php';
         }
     }
 
-    public function show_analytics()
+    private function show_analytics()
     {
         if (file_exists(get_template_directory() . '/partials/head/analytics.php')) {
             require get_template_directory() . '/partials/head/analytics.php';
+        }
+    }
+
+    private function show_facebook_pixel()
+    {
+        if (file_exists(get_template_directory() . '/partials/head/facebook-pixel.php')) {
+            require get_template_directory() . '/partials/head/facebook-pixel.php';
         }
     }
 
