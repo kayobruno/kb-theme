@@ -31,6 +31,13 @@ class KB_Theme_Setup {
         }
     }
 
+    public function show_analytics()
+    {
+        if (file_exists(get_template_directory() . '/partials/head/analytics.php')) {
+            require get_template_directory() . '/partials/head/analytics.php';
+        }
+    }
+
     private function default_theme_configuration()
     {
         add_theme_support('automatic-feed-links');
