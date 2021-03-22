@@ -102,4 +102,29 @@ class KB_Theme_Utils {
 
         return $thumbnail;
     }
+
+    /**
+     * Retorna os banners cadastrados no ACF
+     *
+     * @return array
+     */
+    public static function banners()
+    {
+        $data = array();
+        if (function_exists('get_field')) {
+            $banners = get_field('banners', 'banners');
+            foreach ($banners as $banner) {
+                $data[] = array(
+                    'type' => $banner['type'],
+                    'title' => $banner['title'],
+                    'description' => $banner['description'],
+                    'link' => $banner['link'],
+                    'target' => !empty($banner['new_tab']) ? 'blank_' : '',
+                    'banner' => $banner[$banner['type']],
+                );
+            }
+        }
+
+        return $data;
+    }
 }

@@ -10,6 +10,7 @@ class KB_Theme_Acf {
     {
         $this->options_page_title();
         $this->default_options_page();
+        $this->options_page_banner();
     }
 
     private function options_page_title()
@@ -166,6 +167,149 @@ class KB_Theme_Acf {
                             'param' => 'options_page',
                             'operator' => '==',
                             'value' => 'acf-options',
+                        ),
+                    ),
+                ),
+                'menu_order' => 0,
+                'position' => 'normal',
+                'style' => 'default',
+                'label_placement' => 'top',
+                'instruction_placement' => 'label',
+                'active' => true,
+            ));
+        }
+    }
+
+    /**
+     * Registra todos os campos da página de opções dos banners
+     */
+    private function options_page_banner()
+    {
+        if (function_exists('acf_add_options_page')) {
+            acf_add_options_page(array(
+                'page_title' => 'Banners',
+                'menu_title' => 'Banners',
+                'menu_slug' => 'banners',
+                'capability' => 'edit_posts',
+                'position' => '3.1',
+                'icon_url' => 'dashicons-format-gallery',
+                'redirect' => true,
+                'post_id' => 'banners',
+                'autoload' => false,
+            ));
+        }
+
+        if (function_exists('acf_add_local_field_group')) {
+            acf_add_local_field_group(array(
+                'key' => 'fields_options_page_banner',
+                'title' => 'Informações dos Banners',
+                'fields' => array(
+                    array(
+                        'key' => 'banners',
+                        'label' => 'Banners',
+                        'name' => 'banners',
+                        'type' => 'repeater',
+                        'required' => 1,
+                        'min' => 1,
+                        'layout' => 'block',
+                        'sub_fields' => array(
+                            array(
+                                'key' => 'banner_type',
+                                'label' => 'Tipo',
+                                'name' => 'type',
+                                'type' => 'select',
+                                'required' => 1,
+                                'choices' => array(
+                                    'image' => 'Imagem',
+                                    'video' => 'Vídeo',
+                                ),
+                                'return_format' => 'value',
+                            ),
+                            array(
+                                'key' => 'banner_title',
+                                'label' => 'Título',
+                                'name' => 'title',
+                                'type' => 'text',
+                                'required' => 1,
+                            ),
+                            array(
+                                'key' => 'banner_description',
+                                'label' => 'Descrição',
+                                'name' => 'description',
+                                'type' => 'wysiwyg',
+                                'tabs' => 'all',
+                                'toolbar' => 'full',
+                            ),
+                            array(
+                                'key' => 'banner_link',
+                                'label' => 'Link',
+                                'name' => 'link',
+                                'type' => 'url',
+                            ),
+                            array(
+                                'key' => 'banner_new_tab',
+                                'label' => 'Abrir em nova Aba?',
+                                'name' => 'new_tab',
+                                'type' => 'checkbox',
+                                'conditional_logic' => array(
+                                    array(
+                                        array(
+                                            'field' => 'banner_link',
+                                            'operator' => '!=empty',
+                                        ),
+                                    ),
+                                ),
+                                'choices' => array(
+                                    1 => 'Sim',
+                                ),
+                                'default_value' => array(),
+                                'layout' => 'horizontal',
+                                'return_format' => 'value',
+                            ),
+                            array(
+                                'key' => 'banner_image',
+                                'label' => 'Imagem',
+                                'name' => 'image',
+                                'type' => 'image',
+                                'required' => 1,
+                                'conditional_logic' => array(
+                                    array(
+                                        array(
+                                            'field' => 'banner_type',
+                                            'operator' => '==',
+                                            'value' => 'image',
+                                        ),
+                                    ),
+                                ),
+                                'return_format' => 'url',
+                                'preview_size' => 'medium',
+                                'library' => 'all',
+                            ),
+                            array(
+                                'key' => 'banner_video',
+                                'label' => 'Vídeo',
+                                'name' => 'video',
+                                'type' => 'url',
+                                'required' => 1,
+                                'conditional_logic' => array(
+                                    array(
+                                        array(
+                                            'field' => 'banner_type',
+                                            'operator' => '==',
+                                            'value' => 'video',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                'location' => array(
+                    array(
+                        array(
+                            'param' => 'options_page',
+                            'operator' => '==',
+                            'value' => 'banners',
                         ),
                     ),
                 ),
