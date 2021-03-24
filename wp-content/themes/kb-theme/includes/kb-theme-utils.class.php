@@ -127,4 +127,44 @@ class KB_Theme_Utils {
 
         return $data;
     }
+
+    /**
+     * @param string $menu
+     * @return array
+     */
+    public static function menu(string $menu)
+    {
+        $locations = get_nav_menu_locations();
+        if (!isset($locations[$menu])) {
+            return array();
+        }
+
+        $menu_id = $locations[$menu];
+        $elements = wp_get_nav_menu_items($menu_id);
+
+        return self::build_menu($elements);
+    }
+
+    /**
+     * @param array $elements
+     * @param int $parent_id
+     * @return array
+     */
+    private static function build_menu(array &$elements, int $parent_id = 0)
+    {
+        $data = [];
+        foreach ($elements as &$element) {
+            if ($element->menu_item_parent == $parent_id) {
+                $children = self::build_menu($elements, $element->ID);
+                if ($children) {
+                    $element->children = $children;
+                }
+
+                $data[$element->ID] = $element;
+                unset($element);
+            }
+        }
+
+        return $data;
+    }
 }
