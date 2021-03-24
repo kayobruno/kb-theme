@@ -52,6 +52,7 @@ class KB_Theme {
         $this->define_taxonomies();
         $this->define_setup();
         $this->define_acf();
+        $this->define_api_routes();
     }
 
     /**
@@ -67,6 +68,7 @@ class KB_Theme {
             "includes/kb-theme-setup.class.php",
             "includes/kb-theme-utils.class.php",
             "includes/kb-theme-acf.class.php",
+            "includes/kb-theme-api.class.php",
         );
 
         array_walk($required_classes, array($this, 'load_file'));
@@ -241,6 +243,22 @@ class KB_Theme {
                 'hook' => 'acf/init',
                 'component' => new KB_Theme_Acf(),
                 'callback' => 'init_acf',
+            ),
+        );
+
+        $this->set_actions($actions);
+    }
+
+    /**
+     * Registra todas as rotas customizadas de API
+     */
+    public function define_api_routes()
+    {
+        $actions = array(
+            array(
+                'hook' => 'rest_api_init',
+                'component' => new KB_Theme_Api(),
+                'callback' => 'register_routes',
             ),
         );
 
