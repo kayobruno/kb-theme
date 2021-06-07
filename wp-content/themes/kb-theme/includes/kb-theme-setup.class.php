@@ -26,16 +26,8 @@ class KB_Theme_Setup {
 
     public function setup_metrics_and_custom_tags()
     {
-        $this->show_meta_tags();
         $this->show_analytics();
         $this->show_facebook_pixel();
-    }
-
-    private function show_meta_tags()
-    {
-        if (file_exists(get_template_directory() . '/partials/head/meta-tags.php')) {
-            require get_template_directory() . '/partials/head/meta-tags.php';
-        }
     }
 
     private function show_analytics()
