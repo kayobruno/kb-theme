@@ -11,6 +11,7 @@ class KB_Theme_Acf {
         $this->options_page_title();
         $this->default_options_page();
         $this->options_page_banner();
+        $this->diferencial_fields();
     }
 
     private function options_page_title()
@@ -167,6 +168,44 @@ class KB_Theme_Acf {
                             'param' => 'options_page',
                             'operator' => '==',
                             'value' => 'acf-options',
+                        ),
+                    ),
+                ),
+                'menu_order' => 0,
+                'position' => 'normal',
+                'style' => 'default',
+                'label_placement' => 'top',
+                'instruction_placement' => 'label',
+                'active' => true,
+            ));
+        }
+    }
+
+    /**
+     * Registra os campos do post type Diferencial
+     */
+    private function diferencial_fields()
+    {
+        if (function_exists('acf_add_local_field_group')) {
+            acf_add_local_field_group(array(
+                'key' => 'fields_diferencial',
+                'title' => 'Informações do Diferencial',
+                'fields' => array(
+                    array(
+                        'key' => 'diferencial_link',
+                        'label' => 'Link',
+                        'name' => 'link',
+                        'type' => 'url',
+                        'instructions' => 'URL do botão "Saiba mais" exibido no card do diferencial',
+                        'required' => 1,
+                    ),
+                ),
+                'location' => array(
+                    array(
+                        array(
+                            'param' => 'post_type',
+                            'operator' => '==',
+                            'value' => 'diferencial',
                         ),
                     ),
                 ),

@@ -84,6 +84,37 @@ function meu_tema_register_post_types(): void
 
         'show_in_rest' => true,
     ]);
+
+    register_post_type('diferencial', [
+        'labels' => [
+            'name' => 'Diferenciais',
+            'singular_name' => 'Diferencial',
+            'add_new' => 'Adicionar Diferencial',
+            'add_new_item' => 'Adicionar Diferenciais',
+            'edit_item' => 'Editar Diferencial',
+            'new_item' => 'Novo Diferencial',
+            'view_item' => 'Ver Diferencial',
+            'search_items' => 'Buscar Diferenciais',
+            'not_found' => 'Nenhum Diferencial encontrado',
+        ],
+
+        'public' => true,
+        'has_archive' => false,
+        'rewrite' => [
+            'slug' => 'diferenciais'
+        ],
+
+        'menu_icon' => 'dashicons-awards',
+
+        'supports' => [
+            'title',
+            'editor',
+            'thumbnail',
+            'revisions'
+        ],
+
+        'show_in_rest' => true,
+    ]);
 }
 
 add_action('init', 'meu_tema_register_post_types');

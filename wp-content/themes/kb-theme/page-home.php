@@ -212,47 +212,34 @@ the_post();
                 <h2 class="secao-titulo">Nossos Diferenciais</h2>
             </header>
 
+            <?php
+                $query = new WP_Query([
+                    'post_type' => 'diferencial',
+                    'posts_per_page' => 5,
+                    'orderby' => 'ID',
+                    'order' => 'ASC',
+                ]);
+            ?>
             <ul class="diferenciais__grade rolagem-mobile">
-                <li class="diferencial reveal">
-                    <span class="diferencial__icone-area"><img class="diferencial__icone" src="assets/icone-dif-1.png" alt="" width="40" height="28" loading="lazy"></span>
-                    <hr class="diferencial__separador">
-                    <p class="diferencial__texto">90% dos<br>clientes indicam.</p>
-                    <a href="#" class="diferencial__mais" aria-label="Saiba mais sobre indicação dos clientes">
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                    </a>
-                </li>
-                <li class="diferencial reveal">
-                    <span class="diferencial__icone-area"><img class="diferencial__icone" src="assets/icone-dif-2.png" alt="" width="20" height="30" loading="lazy"></span>
-                    <hr class="diferencial__separador">
-                    <p class="diferencial__texto">Equipe regional. Conexão feita por quem fala a sua língua.</p>
-                    <a href="#" class="diferencial__mais" aria-label="Saiba mais sobre a equipe regional">
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                    </a>
-                </li>
-                <li class="diferencial reveal">
-                    <span class="diferencial__icone-area"><img class="diferencial__icone" src="assets/icone-dif-3.png" alt="" width="38" height="32" loading="lazy"></span>
-                    <hr class="diferencial__separador">
-                    <p class="diferencial__texto">Fibra óptica<br>de alta<br>performance.</p>
-                    <a href="#" class="diferencial__mais" aria-label="Saiba mais sobre a fibra óptica">
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                    </a>
-                </li>
-                <li class="diferencial reveal">
-                    <span class="diferencial__icone-area"><img class="diferencial__icone" src="assets/icone-dif-4.png" alt="" width="35" height="33" loading="lazy"></span>
-                    <hr class="diferencial__separador">
-                    <p class="diferencial__texto">Empresa que<br>investe na<br>sua cidade.</p>
-                    <a href="#" class="diferencial__mais" aria-label="Saiba mais sobre investimentos na cidade">
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                    </a>
-                </li>
-                <li class="diferencial reveal">
-                    <span class="diferencial__icone-area"><img class="diferencial__icone" src="assets/icone-dif-5.png" alt="" width="39" height="39" loading="lazy"></span>
-                    <hr class="diferencial__separador">
-                    <p class="diferencial__texto">Empresa Apoiadora de projetos sociais na comunidade.</p>
-                    <a href="#" class="diferencial__mais" aria-label="Saiba mais sobre projetos sociais">
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-                    </a>
-                </li>
+                <?php
+                if ($query->have_posts()) :
+                    while ($query->have_posts()) :
+                        $query->the_post();
+                        ?>
+                        <li class="diferencial reveal">
+                            <span class="diferencial__icone-area"><img class="diferencial__icone" src="<?php echo KB_Theme_Utils::thumbnail(null, 'thumbnail'); ?>" alt="" loading="lazy"></span>
+                            <hr class="diferencial__separador">
+                            <p class="diferencial__texto"><?php echo nl2br(wp_strip_all_tags(get_the_content())); ?></p>
+                            <a href="<?php the_field('link'); ?>" class="diferencial__mais" aria-label="Saiba mais sobre <?php the_title_attribute(); ?>">
+                                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+                            </a>
+                        </li>
+
+                    <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
             </ul>
         </div>
     </section>
