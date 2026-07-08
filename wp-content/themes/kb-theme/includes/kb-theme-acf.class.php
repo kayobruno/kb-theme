@@ -142,6 +142,26 @@ class KB_Theme_Acf {
                         'toolbar' => 'full',
                     ),
                     array(
+                        'key' => 'group_google',
+                        'label' => 'Google',
+                        'type' => 'tab',
+                        'placement' => 'top',
+                    ),
+                    array(
+                        'key' => 'google_place_id',
+                        'label' => 'Place ID',
+                        'name' => 'google_place_id',
+                        'type' => 'text',
+                        'instructions' => 'ID do local no Google Maps, usado para buscar as avaliações da empresa',
+                    ),
+                    array(
+                        'key' => 'google_api_key',
+                        'label' => 'API Key',
+                        'name' => 'google_api_key',
+                        'type' => 'text',
+                        'instructions' => 'Chave de API do Google Cloud com a Places API habilitada',
+                    ),
+                    array(
                         'key' => 'group_metrics',
                         'label' => 'Métricas',
                         'type' => 'tab',

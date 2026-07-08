@@ -158,6 +158,23 @@ class KB_Theme_Utils {
         );
     }
 
+    /**
+     * Renderiza os SVGs de estrelas das avaliações
+     *
+     * @param int $quantity
+     * @param int $size
+     * @return string
+     */
+    public static function renderStars(int $quantity, int $size = 13): string
+    {
+        $star = sprintf(
+            '<svg width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>',
+            $size
+        );
+
+        return str_repeat($star, max(0, $quantity));
+    }
+
     public static function formatPlanList(string $html): string
     {
         return str_replace(

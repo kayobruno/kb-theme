@@ -286,6 +286,12 @@ the_post();
     </section>
 
     <!-- ========================== DEPOIMENTOS ========================== -->
+    <?php
+        $google_reviews = KB_Theme_Google_Reviews::data();
+        $reviews = $google_reviews['reviews'] ?? [];
+        $rating = (float) ($google_reviews['rating'] ?? 0);
+    ?>
+    <?php if (!empty($reviews)) : ?>
     <section class="depoimentos">
         <div class="container depoimentos__inner">
 
@@ -293,15 +299,11 @@ the_post();
                 <h2 class="depoimentos__titulo">O que falam <br>os nossos <br>clientes</h2>
 
                 <h3 class="depoimentos__avaliacao">Avaliação do Google</h3>
-                <p class="depoimentos__nota" aria-label="Nota 4,9 de 5">
+                <p class="depoimentos__nota" aria-label="Nota <?php echo number_format($rating, 1, ',', ''); ?> de 5">
             <span class="estrelas" aria-hidden="true">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
+              <?php echo KB_Theme_Utils::renderStars((int) round($rating), 15); ?>
             </span>
-                    <span class="depoimentos__nota-valor">4.9</span>
+                    <span class="depoimentos__nota-valor"><?php echo number_format($rating, 1, '.', ''); ?></span>
                 </p>
                 <p class="depoimentos__observacao">As empresas do segmento apresentam <br>avaliação média abaixo de 4 estrelas.</p>
 
@@ -318,78 +320,22 @@ the_post();
 
                 <div class="carrossel__janela">
                     <ul class="carrossel__trilho" data-carrossel="depoimentos">
-                        <li class="depoimento">
-                            <p class="depoimento__estrelas estrelas" aria-label="5 estrelas">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                            </p>
-                            <span class="depoimento__avatar" aria-hidden="true"></span>
-                            <blockquote class="depoimento__card">
-                                <p class="depoimento__texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis</p>
-                                <hr class="depoimento__separador">
-                                <footer>
-                                    <p class="depoimento__nome">José Silva</p>
-                                    <p class="depoimento__empresa">Empresa x</p>
-                                </footer>
-                            </blockquote>
-                        </li>
-                        <li class="depoimento">
-                            <p class="depoimento__estrelas estrelas" aria-label="5 estrelas">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                            </p>
-                            <span class="depoimento__avatar" aria-hidden="true"></span>
-                            <blockquote class="depoimento__card">
-                                <p class="depoimento__texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis</p>
-                                <hr class="depoimento__separador">
-                                <footer>
-                                    <p class="depoimento__nome">José Silva</p>
-                                    <p class="depoimento__empresa">Empresa x</p>
-                                </footer>
-                            </blockquote>
-                        </li>
-                        <li class="depoimento">
-                            <p class="depoimento__estrelas estrelas" aria-label="5 estrelas">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                            </p>
-                            <span class="depoimento__avatar" aria-hidden="true"></span>
-                            <blockquote class="depoimento__card">
-                                <p class="depoimento__texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis</p>
-                                <hr class="depoimento__separador">
-                                <footer>
-                                    <p class="depoimento__nome">José Silva</p>
-                                    <p class="depoimento__empresa">Empresa x</p>
-                                </footer>
-                            </blockquote>
-                        </li>
-                        <li class="depoimento">
-                            <p class="depoimento__estrelas estrelas" aria-label="5 estrelas">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 1.8 3.1 6.9 7.1.7-5.4 4.8 1.6 7-6.4-3.8-6.4 3.8 1.6-7L1.8 9.4l7.1-.7Z"/></svg>
-                            </p>
-                            <span class="depoimento__avatar" aria-hidden="true"></span>
-                            <blockquote class="depoimento__card">
-                                <p class="depoimento__texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis</p>
-                                <hr class="depoimento__separador">
-                                <footer>
-                                    <p class="depoimento__nome">José Silva</p>
-                                    <p class="depoimento__empresa">Empresa x</p>
-                                </footer>
-                            </blockquote>
-                        </li>
+                        <?php foreach ($reviews as $review) : ?>
+                            <li class="depoimento">
+                                <p class="depoimento__estrelas estrelas" aria-label="<?php echo $review['rating']; ?> estrelas">
+                                    <?php echo KB_Theme_Utils::renderStars($review['rating']); ?>
+                                </p>
+                                <span class="depoimento__avatar"<?php if (!empty($review['avatar'])) : ?> style="background: url('<?php echo esc_url($review['avatar']); ?>') center / cover no-repeat"<?php endif; ?> aria-hidden="true"></span>
+                                <blockquote class="depoimento__card">
+                                    <p class="depoimento__texto"><?php echo esc_html(wp_trim_words($review['text'], 25, '…')); ?></p>
+                                    <hr class="depoimento__separador">
+                                    <footer>
+                                        <p class="depoimento__nome"><?php echo esc_html($review['author']); ?></p>
+                                        <p class="depoimento__empresa"><?php echo esc_html($review['date']); ?></p>
+                                    </footer>
+                                </blockquote>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
 
@@ -402,6 +348,7 @@ the_post();
 
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- ========================= VITRINE / STREAMING ========================= -->
     <section class="vitrine">

@@ -53,6 +53,7 @@ class KB_Theme {
         $this->define_setup();
         $this->define_acf();
         $this->define_api_routes();
+        $this->define_google_reviews();
     }
 
     /**
@@ -69,6 +70,7 @@ class KB_Theme {
             "includes/kb-theme-utils.class.php",
             "includes/kb-theme-acf.class.php",
             "includes/kb-theme-api.class.php",
+            "includes/kb-theme-google-reviews.class.php",
         );
 
         array_walk($required_classes, array($this, 'load_file'));
@@ -243,6 +245,34 @@ class KB_Theme {
                 'hook' => 'acf/init',
                 'component' => new KB_Theme_Acf(),
                 'callback' => 'init_acf',
+            ),
+        );
+
+        $this->set_actions($actions);
+    }
+
+    /**
+     * Registra a sincronização das avaliações do Google
+     */
+    public function define_google_reviews()
+    {
+        $google_reviews = new KB_Theme_Google_Reviews();
+
+        $actions = array(
+            array(
+                'hook' => 'init',
+                'component' => $google_reviews,
+                'callback' => 'schedule',
+            ),
+            array(
+                'hook' => KB_Theme_Google_Reviews::CRON_HOOK,
+                'component' => $google_reviews,
+                'callback' => 'sync',
+            ),
+            array(
+                'hook' => 'acf/save_post',
+                'component' => $google_reviews,
+                'callback' => 'sync_on_options_save',
             ),
         );
 
