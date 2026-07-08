@@ -49,3 +49,41 @@ spl_autoload_register(function ($class) {
 
 $theme = new KB_Theme(new KB_Theme_Loader());
 $theme->run();
+
+
+function meu_tema_register_post_types(): void
+{
+    register_post_type('plano', [
+        'labels' => [
+            'name' => 'Planos',
+            'singular_name' => 'Plano',
+            'add_new' => 'Adicionar Plano',
+            'add_new_item' => 'Adicionar Planos',
+            'edit_item' => 'Editar Plano',
+            'new_item' => 'Novo Plano',
+            'view_item' => 'Ver Plano',
+            'search_items' => 'Buscar Planos',
+            'not_found' => 'Nenhum Plano encontrado',
+        ],
+
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => [
+            'slug' => 'planos'
+        ],
+
+        'menu_icon' => 'dashicons-money-alt',
+
+        'supports' => [
+            'title',
+            'editor',
+            'thumbnail',
+            'excerpt',
+            'revisions'
+        ],
+
+        'show_in_rest' => true,
+    ]);
+}
+
+add_action('init', 'meu_tema_register_post_types');

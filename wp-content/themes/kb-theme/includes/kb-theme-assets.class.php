@@ -14,7 +14,7 @@ class KB_Theme_Assets {
 
     private function enqueue_styles()
     {
-        $src = get_template_directory_uri() . '/assets/css/app.min.css';
+        $src = get_template_directory_uri() . '/assets/css/main.css';
         wp_enqueue_style('main', $src, array(), '1.0', 'all');
     }
 
@@ -23,7 +23,7 @@ class KB_Theme_Assets {
         $scripts = array(
             array(
                 'handle' => 'main',
-                'src' => get_template_directory_uri() . '/assets/js/app.min.js',
+                'src' => get_template_directory_uri() . '/assets/js/main.js',
                 'dependencies' => array('jquery'),
                 'version' => '1.0',
                 'in_footer' => true,

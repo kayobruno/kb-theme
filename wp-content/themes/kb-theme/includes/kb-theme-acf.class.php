@@ -268,8 +268,27 @@ class KB_Theme_Acf {
                             ),
                             array(
                                 'key' => 'banner_image',
-                                'label' => 'Imagem',
+                                'label' => 'Imagem Desktop',
                                 'name' => 'image',
+                                'type' => 'image',
+                                'required' => 1,
+                                'conditional_logic' => array(
+                                    array(
+                                        array(
+                                            'field' => 'banner_type',
+                                            'operator' => '==',
+                                            'value' => 'image',
+                                        ),
+                                    ),
+                                ),
+                                'return_format' => 'url',
+                                'preview_size' => 'medium',
+                                'library' => 'all',
+                            ),
+                            array(
+                                'key' => 'banner_image_mobile',
+                                'label' => 'Imagem Mobile',
+                                'name' => 'image_mobile',
                                 'type' => 'image',
                                 'required' => 1,
                                 'conditional_logic' => array(

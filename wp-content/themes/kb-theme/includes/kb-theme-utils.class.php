@@ -145,6 +145,28 @@ class KB_Theme_Utils {
         return self::build_menu($elements);
     }
 
+    public static function renderPrice(string|float|int $price): string
+    {
+        $price = str_replace(',', '.', (string) $price);
+        $value = number_format((float) $price, 2, ',', '');
+        [$integer, $decimal] = explode(',', $value);
+
+        return sprintf(
+            '<span class="plano__preco-moeda">R$</span><span class="plano__preco-valor">%s</span><span class="plano__preco-detalhe"><span class="plano__preco-centavos">,%s</span><span class="plano__preco-mes">/ mês</span></span>',
+            $integer,
+            $decimal
+        );
+    }
+
+    public static function formatPlanList(string $html): string
+    {
+        return str_replace(
+            ['<ul>', '<li>'],
+            ['<ul class="plano__lista">', '<li class="plano__item">'],
+            $html
+        );
+    }
+
     /**
      * @param array $elements
      * @param int $parent_id
