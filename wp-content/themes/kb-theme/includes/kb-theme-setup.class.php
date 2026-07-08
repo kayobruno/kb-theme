@@ -53,7 +53,9 @@ class KB_Theme_Setup {
 
         register_nav_menus(array(
             'main' => esc_html__('Principal'),
-            'footer' => esc_html__('Rodapé'),
+            'footer_1' => esc_html__('Rodapé - Coluna 1'),
+            'footer_2' => esc_html__('Rodapé - Coluna 2'),
+            'footer_3' => esc_html__('Rodapé - Coluna 3'),
         ));
 
         register_sidebar(

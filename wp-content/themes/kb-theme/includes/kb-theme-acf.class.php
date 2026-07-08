@@ -13,6 +13,7 @@ class KB_Theme_Acf {
         $this->options_page_banner();
         $this->diferencial_fields();
         $this->empresa_fields();
+        $this->home_page_fields();
     }
 
     private function options_page_title()
@@ -126,6 +127,14 @@ class KB_Theme_Acf {
                         'label' => 'WhatsApp',
                         'name' => 'whatsapp',
                         'type' => 'text',
+                        'instructions' => 'Número usado em todos os botões de WhatsApp do site',
+                    ),
+                    array(
+                        'key' => 'city',
+                        'label' => 'Cidade',
+                        'name' => 'city',
+                        'type' => 'text',
+                        'instructions' => 'Cidade exibida no topo do site',
                     ),
                     array(
                         'key' => 'email',
@@ -200,6 +209,352 @@ class KB_Theme_Acf {
                 'active' => true,
             ));
         }
+    }
+
+    /**
+     * Registra os campos das seções da Página Inicial
+     */
+    private function home_page_fields()
+    {
+        if (!function_exists('acf_add_local_field_group')) {
+            return;
+        }
+
+        acf_add_local_field_group(array(
+            'key' => 'fields_home_page',
+            'title' => 'Seções da Página Inicial',
+            'fields' => array(
+                array(
+                    'key' => 'group_escolher',
+                    'label' => 'Por que escolher',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'escolher_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'escolher_titulo',
+                    'type' => 'text',
+                    'default_value' => 'Por que escolher a Vexnet?',
+                ),
+                array(
+                    'key' => 'escolher_subtitulo',
+                    'label' => 'Subtítulo da seção',
+                    'name' => 'escolher_subtitulo',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => '',
+                ),
+                array(
+                    'key' => 'escolher_kicker',
+                    'label' => 'Frase de apoio do banner',
+                    'name' => 'escolher_kicker',
+                    'type' => 'text',
+                    'default_value' => 'Atendimento local, conexão sem fronteiras.',
+                ),
+                array(
+                    'key' => 'escolher_titulo_destaque',
+                    'label' => 'Título do banner (parte em verde)',
+                    'name' => 'escolher_titulo_destaque',
+                    'type' => 'text',
+                    'default_value' => 'Nova Russas,',
+                ),
+                array(
+                    'key' => 'escolher_titulo_banner',
+                    'label' => 'Título do banner (parte em branco)',
+                    'name' => 'escolher_titulo_banner',
+                    'type' => 'text',
+                    'default_value' => 'estamos aqui!',
+                ),
+                array(
+                    'key' => 'escolher_texto',
+                    'label' => 'Texto do banner',
+                    'name' => 'escolher_texto',
+                    'type' => 'textarea',
+                    'rows' => 4,
+                    'new_lines' => '',
+                ),
+                array(
+                    'key' => 'escolher_botao_texto',
+                    'label' => 'Texto do botão',
+                    'name' => 'escolher_botao_texto',
+                    'type' => 'text',
+                    'default_value' => 'Fale com nossa equipe',
+                ),
+                array(
+                    'key' => 'escolher_imagem',
+                    'label' => 'Imagem Desktop',
+                    'name' => 'escolher_imagem',
+                    'type' => 'image',
+                    'return_format' => 'url',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ),
+                array(
+                    'key' => 'escolher_imagem_mobile',
+                    'label' => 'Imagem Mobile',
+                    'name' => 'escolher_imagem_mobile',
+                    'type' => 'image',
+                    'instructions' => 'A imagem desktop será utilizada caso esta não seja cadastrada',
+                    'return_format' => 'url',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ),
+                array(
+                    'key' => 'group_diferenciais',
+                    'label' => 'Diferenciais',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'diferenciais_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'diferenciais_titulo',
+                    'type' => 'text',
+                    'default_value' => 'Nossos Diferenciais',
+                ),
+                array(
+                    'key' => 'group_empresas',
+                    'label' => 'Empresas',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'empresas_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'empresas_titulo',
+                    'type' => 'text',
+                    'default_value' => 'A conexão escolhida por grandes empresas da região',
+                ),
+                array(
+                    'key' => 'group_depoimentos',
+                    'label' => 'Depoimentos',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'depoimentos_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'depoimentos_titulo',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => '',
+                    'instructions' => 'Cada linha do campo vira uma linha do título',
+                    'default_value' => "O que falam\nos nossos\nclientes",
+                ),
+                array(
+                    'key' => 'depoimentos_observacao',
+                    'label' => 'Observação abaixo da nota',
+                    'name' => 'depoimentos_observacao',
+                    'type' => 'textarea',
+                    'rows' => 2,
+                    'new_lines' => '',
+                    'default_value' => "As empresas do segmento apresentam\navaliação média abaixo de 4 estrelas.",
+                ),
+                array(
+                    'key' => 'depoimentos_botao_texto',
+                    'label' => 'Texto do botão',
+                    'name' => 'depoimentos_botao_texto',
+                    'type' => 'text',
+                    'default_value' => 'Venha ser Vexlover',
+                ),
+                array(
+                    'key' => 'group_vitrine',
+                    'label' => 'Vitrine',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'vitrine_kicker',
+                    'label' => 'Frase de apoio',
+                    'name' => 'vitrine_kicker',
+                    'type' => 'text',
+                    'default_value' => 'Vitrine Vex',
+                ),
+                array(
+                    'key' => 'vitrine_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'vitrine_titulo',
+                    'type' => 'textarea',
+                    'rows' => 2,
+                    'new_lines' => '',
+                    'default_value' => "Além da internet, você encontra\numa experiência completa.",
+                ),
+                array(
+                    'key' => 'vitrine_subtitulo',
+                    'label' => 'Subtítulo da seção',
+                    'name' => 'vitrine_subtitulo',
+                    'type' => 'text',
+                    'default_value' => 'Confira aqui as novidades que você pode e deve incluir no sem combo',
+                ),
+                array(
+                    'key' => 'vitrine_mascote',
+                    'label' => 'Imagem da mascote',
+                    'name' => 'vitrine_mascote',
+                    'type' => 'image',
+                    'return_format' => 'url',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ),
+                array(
+                    'key' => 'vitrine_cards',
+                    'label' => 'Cards',
+                    'name' => 'vitrine_cards',
+                    'type' => 'repeater',
+                    'layout' => 'table',
+                    'button_label' => 'Adicionar Card',
+                    'sub_fields' => array(
+                        array(
+                            'key' => 'vitrine_card_logo',
+                            'label' => 'Logo',
+                            'name' => 'logo',
+                            'type' => 'image',
+                            'required' => 1,
+                            'return_format' => 'url',
+                            'preview_size' => 'thumbnail',
+                            'library' => 'all',
+                        ),
+                        array(
+                            'key' => 'vitrine_card_canais',
+                            'label' => 'Canais',
+                            'name' => 'canais',
+                            'type' => 'text',
+                            'instructions' => 'Ex: + de 200 canais (opcional)',
+                        ),
+                        array(
+                            'key' => 'vitrine_card_link',
+                            'label' => 'Link',
+                            'name' => 'link',
+                            'type' => 'url',
+                            'required' => 1,
+                        ),
+                    ),
+                ),
+                array(
+                    'key' => 'group_atendimento',
+                    'label' => 'Atendimento',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'atendimento_kicker',
+                    'label' => 'Frase de apoio',
+                    'name' => 'atendimento_kicker',
+                    'type' => 'text',
+                    'default_value' => 'É rapidex!',
+                ),
+                array(
+                    'key' => 'atendimento_titulo',
+                    'label' => 'Título da seção',
+                    'name' => 'atendimento_titulo',
+                    'type' => 'text',
+                    'default_value' => 'Canais de atendimento',
+                ),
+                array(
+                    'key' => 'atendimento_subtitulo',
+                    'label' => 'Subtítulo da seção',
+                    'name' => 'atendimento_subtitulo',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => '',
+                ),
+                array(
+                    'key' => 'atendimento_canais',
+                    'label' => 'Canais',
+                    'name' => 'atendimento_canais',
+                    'type' => 'repeater',
+                    'layout' => 'table',
+                    'button_label' => 'Adicionar Canal',
+                    'sub_fields' => array(
+                        array(
+                            'key' => 'atendimento_canal_icone',
+                            'label' => 'Ícone',
+                            'name' => 'icone',
+                            'type' => 'image',
+                            'required' => 1,
+                            'return_format' => 'url',
+                            'preview_size' => 'thumbnail',
+                            'library' => 'all',
+                        ),
+                        array(
+                            'key' => 'atendimento_canal_texto',
+                            'label' => 'Texto',
+                            'name' => 'texto',
+                            'type' => 'text',
+                            'required' => 1,
+                        ),
+                        array(
+                            'key' => 'atendimento_canal_link',
+                            'label' => 'Link',
+                            'name' => 'link',
+                            'type' => 'url',
+                            'required' => 1,
+                        ),
+                    ),
+                ),
+                array(
+                    'key' => 'app_tag',
+                    'label' => 'Tag do banner do App',
+                    'name' => 'app_tag',
+                    'type' => 'text',
+                    'default_value' => 'NOSSO APP',
+                ),
+                array(
+                    'key' => 'app_titulo',
+                    'label' => 'Título do App',
+                    'name' => 'app_titulo',
+                    'type' => 'textarea',
+                    'rows' => 2,
+                    'new_lines' => '',
+                    'default_value' => "Minha\nVexnet",
+                ),
+                array(
+                    'key' => 'app_texto',
+                    'label' => 'Texto do App',
+                    'name' => 'app_texto',
+                    'type' => 'textarea',
+                    'rows' => 2,
+                    'new_lines' => '',
+                    'default_value' => "Com o nosso App você resolve\ntudo sem sair de casa.",
+                ),
+                array(
+                    'key' => 'app_imagem',
+                    'label' => 'Imagem da mascote',
+                    'name' => 'app_imagem',
+                    'type' => 'image',
+                    'return_format' => 'url',
+                    'preview_size' => 'medium',
+                    'library' => 'all',
+                ),
+                array(
+                    'key' => 'app_google_play',
+                    'label' => 'Link do Google Play',
+                    'name' => 'app_google_play',
+                    'type' => 'url',
+                ),
+                array(
+                    'key' => 'app_app_store',
+                    'label' => 'Link da App Store',
+                    'name' => 'app_app_store',
+                    'type' => 'url',
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'page_template',
+                        'operator' => '==',
+                        'value' => 'page-home.php',
+                    ),
+                ),
+            ),
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ));
     }
 
     /**
@@ -327,7 +682,10 @@ class KB_Theme_Acf {
                                 'key' => 'banner_title',
                                 'label' => 'Título',
                                 'name' => 'title',
-                                'type' => 'text',
+                                'type' => 'textarea',
+                                'rows' => 3,
+                                'new_lines' => '',
+                                'instructions' => 'Cada linha do campo vira uma linha do título no banner',
                                 'required' => 1,
                             ),
                             array(
