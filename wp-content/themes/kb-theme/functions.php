@@ -115,6 +115,36 @@ function meu_tema_register_post_types(): void
 
         'show_in_rest' => true,
     ]);
+
+    register_post_type('empresa', [
+        'labels' => [
+            'name' => 'Empresas',
+            'singular_name' => 'Empresa',
+            'add_new' => 'Adicionar Empresa',
+            'add_new_item' => 'Adicionar Empresas',
+            'edit_item' => 'Editar Empresa',
+            'new_item' => 'Nova Empresa',
+            'view_item' => 'Ver Empresa',
+            'search_items' => 'Buscar Empresas',
+            'not_found' => 'Nenhuma Empresa encontrada',
+        ],
+
+        'public' => true,
+        'has_archive' => false,
+        'rewrite' => [
+            'slug' => 'empresas'
+        ],
+
+        'menu_icon' => 'dashicons-building',
+
+        'supports' => [
+            'title',
+            'thumbnail',
+            'revisions'
+        ],
+
+        'show_in_rest' => true,
+    ]);
 }
 
 add_action('init', 'meu_tema_register_post_types');

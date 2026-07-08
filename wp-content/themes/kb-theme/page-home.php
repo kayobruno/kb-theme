@@ -254,16 +254,27 @@ the_post();
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.5 2.5 5 9l6.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
 
+                <?php
+                    $query = new WP_Query([
+                        'post_type' => 'empresa',
+                        'posts_per_page' => -1,
+                        'orderby' => 'ID',
+                        'order' => 'ASC',
+                    ]);
+                ?>
                 <div class="carrossel__janela">
                     <ul class="carrossel__trilho" data-carrossel="empresas">
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
-                        <li class="empresas__item"><a href="#" class="empresas__card"><img src="assets/empresa.png" alt="Logo de empresa parceira" width="134" height="76" loading="lazy"></a></li>
+                        <?php
+                        if ($query->have_posts()) :
+                            while ($query->have_posts()) :
+                                $query->the_post();
+                                ?>
+                                <li class="empresas__item"><a href="<?php the_field('link'); ?>" class="empresas__card"><img src="<?php echo KB_Theme_Utils::thumbnail(null, 'medium'); ?>" alt="<?php the_title_attribute(); ?>" width="134" height="76" loading="lazy"></a></li>
+                            <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
                     </ul>
                 </div>
 

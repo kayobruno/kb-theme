@@ -12,6 +12,7 @@ class KB_Theme_Acf {
         $this->default_options_page();
         $this->options_page_banner();
         $this->diferencial_fields();
+        $this->empresa_fields();
     }
 
     private function options_page_title()
@@ -206,6 +207,44 @@ class KB_Theme_Acf {
                             'param' => 'post_type',
                             'operator' => '==',
                             'value' => 'diferencial',
+                        ),
+                    ),
+                ),
+                'menu_order' => 0,
+                'position' => 'normal',
+                'style' => 'default',
+                'label_placement' => 'top',
+                'instruction_placement' => 'label',
+                'active' => true,
+            ));
+        }
+    }
+
+    /**
+     * Registra os campos do post type Empresa
+     */
+    private function empresa_fields()
+    {
+        if (function_exists('acf_add_local_field_group')) {
+            acf_add_local_field_group(array(
+                'key' => 'fields_empresa',
+                'title' => 'Informações da Empresa',
+                'fields' => array(
+                    array(
+                        'key' => 'empresa_link',
+                        'label' => 'Link',
+                        'name' => 'link',
+                        'type' => 'url',
+                        'instructions' => 'URL de destino do card da empresa no carrossel',
+                        'required' => 1,
+                    ),
+                ),
+                'location' => array(
+                    array(
+                        array(
+                            'param' => 'post_type',
+                            'operator' => '==',
+                            'value' => 'empresa',
                         ),
                     ),
                 ),
