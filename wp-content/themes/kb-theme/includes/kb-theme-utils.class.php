@@ -104,6 +104,47 @@ class KB_Theme_Utils {
     }
 
     /**
+     * Retorna as imagens de "Incluso no plano" de um plano, normalizadas
+     * como lista de arrays ['url' => ..., 'alt' => ...].
+     *
+     * Prioriza a galeria (galeria_beneficios); se estiver vazia, usa a
+     * imagem única antiga (img_beneficios) como fallback.
+     *
+     * @param int $plano_id
+     * @return array
+     */
+    public static function planImages(int $plano_id): array
+    {
+        if (!$plano_id || !function_exists('get_field')) {
+            return array();
+        }
+
+        $imagens = array();
+        $galeria = get_field('galeria_beneficios', $plano_id);
+        if (is_array($galeria) && !empty($galeria)) {
+            foreach ($galeria as $imagem) {
+                if (is_array($imagem)) {
+                    $url = $imagem['url'] ?? '';
+                    $alt = $imagem['alt'] ?? '';
+                } else {
+                    // Fallback caso o campo retorne apenas o ID do anexo
+                    $url = wp_get_attachment_image_url((int) $imagem, 'medium');
+                    $alt = get_post_meta((int) $imagem, '_wp_attachment_image_alt', true);
+                }
+                if (!empty($url)) {
+                    $imagens[] = array('url' => $url, 'alt' => $alt);
+                }
+            }
+        }
+
+        if (empty($imagens) && ($img_unica = get_field('img_beneficios', $plano_id))) {
+            $imagens[] = array('url' => $img_unica, 'alt' => '');
+        }
+
+        return $imagens;
+    }
+
+    /**
      * Retorna os banners cadastrados no ACF
      *
      * @return array

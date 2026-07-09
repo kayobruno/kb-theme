@@ -538,8 +538,17 @@ button:focus-visible {
 }
 
 .hero__watch {
+  position: relative;
   width: 110px;
+  height: 48px;
   margin: 0 auto;
+}
+
+/* Imagens de "Incluso no plano" em slide dentro do card do hero */
+.hero__watch .plano__slide-item {
+  width: 110px;
+  max-height: 48px;
+  transition: opacity .6s ease;
 }
 
 .hero__preco {

@@ -24,7 +24,11 @@ $assets = get_template_directory_uri() . '/assets';
                 <ul class="carrossel__trilho" data-carrossel="hero" data-autoplay="6000">
                     <?php foreach ($banners as $banner) : ?>
                         <?php if ('image' !== $banner['type']) continue; ?>
-                        <?php $banner_plano_id = !empty($banner['plano']) ? (int) $banner['plano'] : 0; ?>
+                        <?php
+                            $banner_plano_id = !empty($banner['plano']) ? (int) $banner['plano'] : 0;
+                            $imagens_plano = KB_Theme_Utils::planImages($banner_plano_id);
+                            $tem_slide_hero = count($imagens_plano) > 1;
+                        ?>
                         <li class="hero__slide">
                             <picture class="hero__foto-area">
                                 <source media="(max-width: 1024px)" srcset="<?php echo esc_url($banner['banner_mobile'] ?: $banner['banner']); ?>">
@@ -37,7 +41,13 @@ $assets = get_template_directory_uri() . '/assets';
                                         <div class="hero__card">
                                             <p class="hero__mega"><strong class="hero__mega-numero"><?php echo esc_html((string) get_field('megas', $banner_plano_id)); ?></strong><span class="hero__mega-unidade">MEGA</span></p>
                                             <hr class="hero__separador">
-                                            <img class="hero__watch" src="<?php echo esc_url((string) get_field('img_beneficios', $banner_plano_id)); ?>" alt="" width="110" height="48">
+                                            <?php if (!empty($imagens_plano)): ?>
+                                                <div class="hero__watch"<?php echo $tem_slide_hero ? ' data-plano-slide data-autoplay="3500"' : ''; ?>>
+                                                    <?php foreach ($imagens_plano as $indice => $imagem): ?>
+                                                        <img class="plano__slide-item<?php echo $indice === 0 ? ' plano__slide-item--ativo' : ''; ?>" src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>" loading="lazy">
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
                                             <hr class="hero__separador">
                                             <p class="hero__preco">
                                                 <?php echo KB_Theme_Utils::renderPrice((string) get_field('preco', $banner_plano_id)); ?>
@@ -87,27 +97,8 @@ $assets = get_template_directory_uri() . '/assets';
                         $tem_oferta = trim((string) $preco_oferta) !== '';
                         $condicoes = trim((string) get_field('condicoes'));
 
-                        // Galeria "Incluso no plano" com fallback para a imagem única antiga
-                        $galeria = get_field('galeria_beneficios');
-                        $imagens_beneficios = array();
-                        if (is_array($galeria) && !empty($galeria)) {
-                            foreach ($galeria as $imagem) {
-                                if (is_array($imagem)) {
-                                    $url = $imagem['url'] ?? '';
-                                    $alt = $imagem['alt'] ?? '';
-                                } else {
-                                    // Fallback caso o campo retorne apenas o ID do anexo
-                                    $url = wp_get_attachment_image_url((int) $imagem, 'medium');
-                                    $alt = get_post_meta((int) $imagem, '_wp_attachment_image_alt', true);
-                                }
-                                if (!empty($url)) {
-                                    $imagens_beneficios[] = array('url' => $url, 'alt' => $alt);
-                                }
-                            }
-                        }
-                        if (empty($imagens_beneficios) && ($img_unica = get_field('img_beneficios'))) {
-                            $imagens_beneficios[] = array('url' => $img_unica, 'alt' => '');
-                        }
+                        // Imagens de "Incluso no plano" (galeria com fallback)
+                        $imagens_beneficios = KB_Theme_Utils::planImages($plano_id);
                         $tem_slide = count($imagens_beneficios) > 1;
                         ?>
                         <article class="plano <?php if (get_field('plano_destaque')): ?> plano--destaque<?php endif; ?> reveal">
