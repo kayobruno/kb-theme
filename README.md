@@ -48,6 +48,13 @@ A home usa o template **Página Inicial** (`page-home.php`). Ao editar a página
 - Título e subtítulo da seção: campos **titulo_planos** / **descricao_planos** na edição da Página Inicial.
 - A home exibe os 5 primeiros planos (ordem de criação).
 
+No box **Informações complementares do Plano** (abaixo dos campos originais) há ainda:
+
+- **Galeria "Incluso no plano"**: várias imagens para o campo "Incluso no seu plano". Com duas ou mais, elas passam automaticamente em slide dentro do card. Se ficar vazia, é usada a imagem única antiga.
+- **Preço de oferta**: opcional, no mesmo formato do preço normal (ex.: `79,90`). Quando preenchido, o card mostra *"de R$ [preço] por apenas R$ [oferta]"*, com a oferta em destaque e o preço antigo pequeno e riscado. (Observação: o card de oferta do **Hero** continua exibindo o preço normal do plano em destaque, não a oferta.)
+- **Cor da tag de destaque**: cor de fundo do selo do plano em destaque. Vazio = cor padrão do tema.
+- **Condições e mais detalhes**: texto jurídico/condições. Quando preenchido, aparece o link "Condições e mais detalhes" que abre um modal (janela) com esse texto. Vazio = o link não aparece.
+
 ### Por que escolher
 
 - Aba **Por que escolher** na edição da Página Inicial: título e subtítulo da seção, frase de apoio, título do banner (parte verde + parte branca), texto, texto do botão e imagens desktop/mobile.

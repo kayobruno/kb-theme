@@ -13,6 +13,7 @@ class KB_Theme_Acf {
         $this->options_page_banner();
         $this->diferencial_fields();
         $this->empresa_fields();
+        $this->plano_fields();
         $this->home_page_fields();
     }
 
@@ -620,6 +621,74 @@ class KB_Theme_Acf {
                             'param' => 'post_type',
                             'operator' => '==',
                             'value' => 'empresa',
+                        ),
+                    ),
+                ),
+                'menu_order' => 0,
+                'position' => 'normal',
+                'style' => 'default',
+                'label_placement' => 'top',
+                'instruction_placement' => 'label',
+                'active' => true,
+            ));
+        }
+    }
+
+    /**
+     * Registra os campos complementares do post type Plano
+     *
+     * Os campos originais (megas, preco, beneficios, img_beneficios,
+     * plano_destaque, selo_destaque) foram criados via painel do ACF e
+     * permanecem gravados no banco. Aqui adicionamos apenas os campos novos.
+     */
+    private function plano_fields()
+    {
+        if (function_exists('acf_add_local_field_group')) {
+            acf_add_local_field_group(array(
+                'key' => 'fields_plano',
+                'title' => 'Informações complementares do Plano',
+                'fields' => array(
+                    array(
+                        'key' => 'plano_galeria_beneficios',
+                        'label' => 'Galeria "Incluso no plano"',
+                        'name' => 'galeria_beneficios',
+                        'type' => 'gallery',
+                        'instructions' => 'Imagens exibidas em "Incluso no seu plano". Quando houver mais de uma, elas passam automaticamente em slide dentro do card. Se ficar vazio, é usada a imagem única do campo antigo.',
+                        'return_format' => 'array',
+                        'preview_size' => 'thumbnail',
+                        'library' => 'all',
+                    ),
+                    array(
+                        'key' => 'plano_preco_oferta',
+                        'label' => 'Preço de oferta',
+                        'name' => 'preco_oferta',
+                        'type' => 'text',
+                        'instructions' => 'Opcional. Use o mesmo formato do preço normal (ex.: 79,90). Quando preenchido, o card mostra "de R$ [preço] por apenas R$ [oferta]", com a oferta em destaque.',
+                    ),
+                    array(
+                        'key' => 'plano_cor_selo',
+                        'label' => 'Cor da tag de destaque',
+                        'name' => 'cor_selo',
+                        'type' => 'color_picker',
+                        'instructions' => 'Cor de fundo da tag de destaque (selo) exibida nos planos em destaque. Se ficar vazio, usa a cor padrão do tema.',
+                    ),
+                    array(
+                        'key' => 'plano_condicoes',
+                        'label' => 'Condições e mais detalhes',
+                        'name' => 'condicoes',
+                        'type' => 'wysiwyg',
+                        'instructions' => 'Texto jurídico/condições exibido em um box ao clicar em "Condições e mais detalhes". Se ficar vazio, o link não aparece.',
+                        'tabs' => 'all',
+                        'toolbar' => 'full',
+                        'media_upload' => 0,
+                    ),
+                ),
+                'location' => array(
+                    array(
+                        array(
+                            'param' => 'post_type',
+                            'operator' => '==',
+                            'value' => 'plano',
                         ),
                     ),
                 ),

@@ -146,17 +146,52 @@ class KB_Theme_Utils {
         return self::build_menu($elements);
     }
 
-    public static function renderPrice(string|float|int $price): string
+    /**
+     * Renderiza o preço de um plano.
+     *
+     * Quando um preço de oferta é informado, o valor grande passa a ser a
+     * oferta e o preço original vira o texto menor "de R$ X por apenas".
+     *
+     * @param string|float|int      $price Preço normal
+     * @param string|float|int|null $offer Preço de oferta (opcional)
+     * @return string
+     */
+    public static function renderPrice(string|float|int $price, string|float|int|null $offer = null): string
     {
-        $price = str_replace(',', '.', (string) $price);
-        $value = number_format((float) $price, 2, ',', '');
-        [$integer, $decimal] = explode(',', $value);
+        $has_offer = $offer !== null && trim((string) $offer) !== '';
 
-        return sprintf(
+        // Com oferta, o número em destaque é o valor promocional.
+        [$integer, $decimal] = self::splitPrice($has_offer ? $offer : $price);
+
+        $prefix = '';
+        if ($has_offer) {
+            [$old_integer, $old_decimal] = self::splitPrice($price);
+            $prefix = sprintf(
+                '<span class="plano__preco-oferta">de <span class="plano__preco-antigo">R$ %s,%s</span> por apenas</span>',
+                $old_integer,
+                $old_decimal
+            );
+        }
+
+        return $prefix . sprintf(
             '<span class="plano__preco-moeda">R$</span><span class="plano__preco-valor">%s</span><span class="plano__preco-detalhe"><span class="plano__preco-centavos">,%s</span><span class="plano__preco-mes">/ mês</span></span>',
             $integer,
             $decimal
         );
+    }
+
+    /**
+     * Separa um preço em [inteiro, centavos] normalizando vírgula/ponto.
+     *
+     * @param string|float|int $price
+     * @return array{0:string,1:string}
+     */
+    private static function splitPrice(string|float|int $price): array
+    {
+        $price = str_replace(',', '.', (string) $price);
+        $value = number_format((float) $price, 2, ',', '');
+
+        return explode(',', $value);
     }
 
     /**

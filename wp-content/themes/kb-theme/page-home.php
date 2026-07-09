@@ -91,31 +91,79 @@ $assets = get_template_directory_uri() . '/assets';
                 if ($query->have_posts()) :
                     while ($query->have_posts()) :
                         $query->the_post();
+
+                        $plano_id = get_the_ID();
+                        $cor_selo = (string) get_field('cor_selo');
+                        $preco_oferta = get_field('preco_oferta');
+                        $tem_oferta = trim((string) $preco_oferta) !== '';
+                        $condicoes = trim((string) get_field('condicoes'));
+
+                        // Galeria "Incluso no plano" com fallback para a imagem única antiga
+                        $galeria = get_field('galeria_beneficios');
+                        $imagens_beneficios = array();
+                        if (is_array($galeria) && !empty($galeria)) {
+                            foreach ($galeria as $imagem) {
+                                if (is_array($imagem)) {
+                                    $url = $imagem['url'] ?? '';
+                                    $alt = $imagem['alt'] ?? '';
+                                } else {
+                                    // Fallback caso o campo retorne apenas o ID do anexo
+                                    $url = wp_get_attachment_image_url((int) $imagem, 'medium');
+                                    $alt = get_post_meta((int) $imagem, '_wp_attachment_image_alt', true);
+                                }
+                                if (!empty($url)) {
+                                    $imagens_beneficios[] = array('url' => $url, 'alt' => $alt);
+                                }
+                            }
+                        }
+                        if (empty($imagens_beneficios) && ($img_unica = get_field('img_beneficios'))) {
+                            $imagens_beneficios[] = array('url' => $img_unica, 'alt' => '');
+                        }
+                        $tem_slide = count($imagens_beneficios) > 1;
                         ?>
                         <article class="plano <?php if (get_field('plano_destaque')): ?> plano--destaque<?php endif; ?> reveal">
                             <?php if (get_field('plano_destaque')): ?>
-                                <span class="plano__selo"><?php the_field('selo_destaque'); ?></span>
+                                <span class="plano__selo"<?php echo $cor_selo ? ' style="background:' . esc_attr($cor_selo) . '"' : ''; ?>><?php the_field('selo_destaque'); ?></span>
                             <?php endif; ?>
 
                             <span class="plano__tag"><?php the_title(); ?></span>
                             <p class="plano__mega"><strong class="plano__mega-numero"><?php the_field('megas'); ?></strong><span class="plano__mega-unidade">MEGA</span></p>
                             <p class="plano__incluso">Incluso no seu plano:</p>
-                            <div class="plano__streaming">
-                                <img class="plano__logo" src="<?php the_field('img_beneficios'); ?>" alt="" width="112" height="41">
-                            </div>
+                            <?php if (!empty($imagens_beneficios)): ?>
+                                <div class="plano__streaming plano__slide"<?php echo $tem_slide ? ' data-plano-slide data-autoplay="3500"' : ''; ?>>
+                                    <div class="plano__slide-trilho">
+                                        <?php foreach ($imagens_beneficios as $indice => $imagem): ?>
+                                            <img class="plano__logo plano__slide-item<?php echo $indice === 0 ? ' plano__slide-item--ativo' : ''; ?>" src="<?php echo esc_url($imagem['url']); ?>" alt="<?php echo esc_attr($imagem['alt']); ?>" loading="lazy">
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <hr class="plano__separador">
                             <?php echo KB_Theme_Utils::formatPlanList(get_field('beneficios')); ?>
                             <hr class="plano__separador">
 
-                            <a href="<?php the_permalink(); ?>" class="plano__condicoes">Condições e mais detalhes</a>
-                            <p class="plano__preco">
-                                <?php echo KB_Theme_Utils::renderPrice(get_field('preco')); ?>
+                            <?php if ($condicoes !== ''): ?>
+                                <button type="button" class="plano__condicoes" data-plano-condicoes aria-haspopup="dialog" aria-controls="plano-condicoes-<?php echo esc_attr($plano_id); ?>">Condições e mais detalhes</button>
+                            <?php endif; ?>
+                            <p class="plano__preco<?php echo $tem_oferta ? ' plano__preco--oferta' : ''; ?>">
+                                <?php echo KB_Theme_Utils::renderPrice(get_field('preco'), $preco_oferta); ?>
                             </p>
                             <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao plano__botao">
                                 <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
                                 Chame no Whatsapp
                             </a>
                         </article>
+
+                        <?php if ($condicoes !== ''): ?>
+                            <div class="plano-modal" id="plano-condicoes-<?php echo esc_attr($plano_id); ?>" hidden>
+                                <div class="plano-modal__fundo" data-plano-modal-fechar></div>
+                                <div class="plano-modal__caixa" role="dialog" aria-modal="true" aria-labelledby="plano-condicoes-titulo-<?php echo esc_attr($plano_id); ?>">
+                                    <button type="button" class="plano-modal__fechar" data-plano-modal-fechar aria-label="Fechar">&times;</button>
+                                    <h3 class="plano-modal__titulo" id="plano-condicoes-titulo-<?php echo esc_attr($plano_id); ?>">Condições e mais detalhes</h3>
+                                    <div class="plano-modal__conteudo"><?php echo wp_kses_post($condicoes); ?></div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
                     <?php
                     endwhile;
