@@ -1389,6 +1389,8 @@ body.plano-modal-aberto {
   position: relative;
   flex: 0 0 100%;
   padding-top: 52px;
+  display: flex;
+  flex-direction: column;
 }
 
 .depoimento__estrelas {
@@ -1409,6 +1411,9 @@ body.plano-modal-aberto {
 }
 
 .depoimento__card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background: var(--cor-cinza-card);
   border-radius: 8px;
   padding: 48px 30px 30px;
@@ -1430,7 +1435,9 @@ body.plano-modal-aberto {
 .depoimento__separador {
   height: 1px;
   background: #D9DBDF;
-  margin: 12px 0 26px;
+  /* margin-top auto empurra separador + rodapé para a base, alinhando
+     nome/data em todos os cards independentemente do tamanho do texto */
+  margin: auto 0 26px;
 }
 
 .depoimento__nome {
