@@ -16,13 +16,6 @@ $assets = get_template_directory_uri() . '/assets';
     <!-- ============================= HERO ============================= -->
     <?php
         $banners = KB_Theme_Utils::banners();
-        $destaque_query = new WP_Query([
-            'post_type' => 'plano',
-            'posts_per_page' => 1,
-            'meta_key' => 'plano_destaque',
-            'meta_value' => '1',
-        ]);
-        $plano_destaque = $destaque_query->posts[0] ?? null;
     ?>
     <?php if (!empty($banners)) : ?>
     <section class="hero" aria-label="Destaques">
@@ -31,27 +24,23 @@ $assets = get_template_directory_uri() . '/assets';
                 <ul class="carrossel__trilho" data-carrossel="hero" data-autoplay="6000">
                     <?php foreach ($banners as $banner) : ?>
                         <?php if ('image' !== $banner['type']) continue; ?>
+                        <?php $banner_plano_id = !empty($banner['plano']) ? (int) $banner['plano'] : 0; ?>
                         <li class="hero__slide">
                             <picture class="hero__foto-area">
                                 <source media="(max-width: 1024px)" srcset="<?php echo esc_url($banner['banner_mobile'] ?: $banner['banner']); ?>">
                                 <img class="hero__foto" src="<?php echo esc_url($banner['banner']); ?>" alt="" width="968" height="390">
                             </picture>
 
-                            <div class="container hero__inner">
-                                <div class="hero__conteudo reveal">
-                                    <h1 class="hero__titulo"><?php echo nl2br(esc_html($banner['title'])); ?></h1>
-                                    <p class="hero__subtitulo"><?php echo nl2br(wp_strip_all_tags((string) $banner['description'])); ?></p>
-                                </div>
-
-                                <?php if ($plano_destaque) : ?>
+                            <?php if ($banner_plano_id) : ?>
+                                <div class="container hero__inner">
                                     <div class="hero__oferta reveal">
                                         <div class="hero__card">
-                                            <p class="hero__mega"><strong class="hero__mega-numero"><?php echo esc_html((string) get_field('megas', $plano_destaque->ID)); ?></strong><span class="hero__mega-unidade">MEGA</span></p>
+                                            <p class="hero__mega"><strong class="hero__mega-numero"><?php echo esc_html((string) get_field('megas', $banner_plano_id)); ?></strong><span class="hero__mega-unidade">MEGA</span></p>
                                             <hr class="hero__separador">
-                                            <img class="hero__watch" src="<?php echo esc_url((string) get_field('img_beneficios', $plano_destaque->ID)); ?>" alt="" width="110" height="48">
+                                            <img class="hero__watch" src="<?php echo esc_url((string) get_field('img_beneficios', $banner_plano_id)); ?>" alt="" width="110" height="48">
                                             <hr class="hero__separador">
                                             <p class="hero__preco">
-                                                <?php echo KB_Theme_Utils::renderPrice((string) get_field('preco', $plano_destaque->ID)); ?>
+                                                <?php echo KB_Theme_Utils::renderPrice((string) get_field('preco', $banner_plano_id)); ?>
                                             </p>
                                         </div>
                                         <a href="<?php echo esc_url($banner['link'] ?: $whatsapp_link); ?>" class="botao botao--pill hero__botao">
@@ -59,8 +48,8 @@ $assets = get_template_directory_uri() . '/assets';
                                             Assine já
                                         </a>
                                     </div>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

@@ -116,8 +116,7 @@ class KB_Theme_Utils {
             foreach ($banners as $banner) {
                 $data[] = array(
                     'type' => $banner['type'],
-                    'title' => $banner['title'],
-                    'description' => $banner['description'],
+                    'plano' => $banner['plano'] ?? '',
                     'link' => $banner['link'],
                     'target' => !empty($banner['new_tab']) ? 'blank_' : '',
                     'banner' => $banner[$banner['type']],

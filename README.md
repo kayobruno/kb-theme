@@ -37,21 +37,21 @@ A home usa o template **Página Inicial** (`page-home.php`). Ao editar a página
 ### Hero (carrossel do topo)
 
 - Gerenciado no menu **Banners** do admin (página de opções própria).
-- Cada banner tem: título (cada linha do campo vira uma linha no slide), descrição, link, imagem desktop e imagem mobile. Banners do tipo "Vídeo" não são exibidos no hero.
-- **Card de oferta** (megas + logo do streaming + preço): é preenchido automaticamente com o **Plano marcado como destaque** (ver Planos abaixo). Se nenhum plano for destaque, o card não aparece.
+- Cada banner tem: **plano em destaque** (opcional), link, imagem desktop e imagem mobile. O título e a descrição agora fazem parte da própria imagem, então não há mais campos de texto. Banners do tipo "Vídeo" não são exibidos no hero.
+- **Card de oferta** (megas + logo do streaming + preço): aparece apenas quando um **plano** é selecionado naquele banner, exibindo os dados do plano escolhido. Banner sem plano mostra só a imagem.
 - O botão "Assine já" usa o link do banner; se vazio, abre o WhatsApp.
 
 ### Planos
 
 - Cadastrados no menu **Planos** (custom post type). Cada plano tem: título (tag do card), megas, imagem dos benefícios, lista de benefícios, preço, destaque (sim/não) e selo do destaque.
-- O plano com **destaque** ganha o selo no card e também alimenta o card de oferta do Hero.
+- O plano com **destaque** ganha o selo no card. O card de oferta do Hero é definido por banner (ver Hero acima).
 - Título e subtítulo da seção: campos **titulo_planos** / **descricao_planos** na edição da Página Inicial.
 - A home exibe os 5 primeiros planos (ordem de criação).
 
 No box **Informações complementares do Plano** (abaixo dos campos originais) há ainda:
 
 - **Galeria "Incluso no plano"**: várias imagens para o campo "Incluso no seu plano". Com duas ou mais, elas passam automaticamente em slide dentro do card. Se ficar vazia, é usada a imagem única antiga.
-- **Preço de oferta**: opcional, no mesmo formato do preço normal (ex.: `79,90`). Quando preenchido, o card mostra *"de R$ [preço] por apenas R$ [oferta]"*, com a oferta em destaque e o preço antigo pequeno e riscado. (Observação: o card de oferta do **Hero** continua exibindo o preço normal do plano em destaque, não a oferta.)
+- **Preço de oferta**: opcional, no mesmo formato do preço normal (ex.: `79,90`). Quando preenchido, o card mostra *"de R$ [preço] por apenas R$ [oferta]"*, com a oferta em destaque e o preço antigo pequeno e riscado. (Observação: o card de oferta do **Hero** continua exibindo o preço normal do plano selecionado no banner, não a oferta.)
 - **Cor da tag de destaque**: cor de fundo do selo do plano em destaque. Vazio = cor padrão do tema.
 - **Condições e mais detalhes**: texto jurídico/condições. Quando preenchido, aparece o link "Condições e mais detalhes" que abre um modal (janela) com esse texto. Vazio = o link não aparece.
 
