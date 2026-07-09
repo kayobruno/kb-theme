@@ -246,6 +246,10 @@ node_modules/
 # ignore assets themes
 wp-content/themes/*/assets/*
 
+# exceto os assets (código-fonte) do tema kb-theme, que são versionados
+!wp-content/themes/kb-theme/assets/
+!wp-content/themes/kb-theme/assets/**
+
 # ignore log files and databases
 *.log
 *.sql
