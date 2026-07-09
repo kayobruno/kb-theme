@@ -108,7 +108,9 @@ class KB_Theme_Google_Reviews {
     private function format_reviews(array $reviews): array
     {
         $reviews = array_filter($reviews, function ($review) {
-            return ($review['rating'] ?? 0) >= self::MIN_RATING;
+            $tem_comentario = '' !== trim((string) ($review['text'] ?? ''));
+
+            return ($review['rating'] ?? 0) >= self::MIN_RATING && $tem_comentario;
         });
 
         usort($reviews, function ($a, $b) {
