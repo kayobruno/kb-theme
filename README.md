@@ -30,7 +30,19 @@ Menu **Theme Options** no admin (página de opções do ACF). Vale para o site i
 - **Abrir item em nova aba**: use a opção nativa **"Abrir link em uma nova aba"** de cada item de menu (ative-a em **Opções de tela**, no topo direito da tela de Menus).
 - **Item de submenu como imagem** (ex.: badges Google Play / App Store na "Área do cliente"): no item de submenu, marque a classe CSS **`menu-imagem`** (ou `menu-image`) e cole a **URL da imagem** no campo **Descrição** (envie a imagem em **Mídia → Adicionar** e copie a URL do arquivo). O texto do rótulo vira o `alt`. Os campos **Classes CSS** e **Descrição** também são ativados em **Opções de tela**. Sem a classe/URL, o item continua exibido como texto.
 - **Botão "Assine fácil"**: abre o WhatsApp cadastrado em Theme Options → Contato.
-- **Cidade**: Theme Options → Contato → Cidade (se vazio, não é exibida).
+- **Cidade / Seletor de cidades**: ver a seção **Cidades (Multisite)** abaixo. Em Multisite com 2+ cidades, o topo mostra um **seletor** (dropdown) que troca de cidade; com uma cidade só (ou fora de Multisite), mostra apenas o nome (Theme Options → Contato → Cidade).
+
+## Cidades (Multisite)
+
+Cada cidade é um **subsite** de uma rede WordPress Multisite (por subdiretório, ex.: `.../fortaleza`). Todo o conteúdo — planos, empresas, banners, avaliações, contatos, textos da home, menus — é **independente por cidade**.
+
+- **Seletor no topo**: aparece automaticamente quando a rede tem 2+ cidades. Lista cada subsite; o rótulo vem do campo **Cidade** (Theme Options → Contato → Cidade) de cada site, com fallback para o nome do site. Selecionar uma cidade navega para o subsite dela.
+- **Gerenciar a rede**: **Meus sites → Administração da rede**.
+- **Adicionar uma cidade nova (clonando o modelo)**:
+  1. Tenha uma cidade **modelo** já configurada (planos, menus, Theme Options, banners, textos da home).
+  2. Com o plugin **NS Cloner – Site Copier** (ativado na rede), clone o modelo para o novo subsite.
+  3. Ajuste os dados específicos da cidade: **Cidade** (rótulo do seletor), **WhatsApp / Telefone / Endereço**, **Google Place ID / API Key** (as avaliações re-sincronizam ao salvar as opções) e revise **planos/banners**.
+- **Requisitos da rede**: o tema **kb-theme** e o **ACF** precisam estar ativos **na rede** (Administração da rede → Temas / Plugins), senão os subsites ficam sem layout/campos.
 
 ## Página Inicial
 

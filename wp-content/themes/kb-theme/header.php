@@ -26,8 +26,20 @@
 
         <?php
             $logo = function_exists('get_field') ? get_field('logo', 'options') : '';
-            $city = function_exists('get_field') ? get_field('city', 'options') : '';
             $menu_items = KB_Theme_Utils::menu('main');
+
+            // Cidades da rede (Multisite). Fora de Multisite, cai no campo city das opções.
+            $cidades = KB_Theme_Utils::cities();
+            $cidade_atual = '';
+            foreach ($cidades as $c) {
+                if ($c['atual']) {
+                    $cidade_atual = $c['nome'];
+                    break;
+                }
+            }
+            if ('' === $cidade_atual) {
+                $cidade_atual = function_exists('get_field') ? (string) get_field('city', 'options') : '';
+            }
         ?>
         <header class="header">
             <div class="container header__inner">
@@ -81,10 +93,25 @@
                             <?php echo KB_Theme_Utils::renderWhatsappIcon(14); ?>
                             Assine fácil
                         </a>
-                        <?php if ($city) : ?>
+                        <?php if (count($cidades) > 1) : ?>
+                            <div class="header__cidade header__cidade--menu">
+                                <button type="button" class="header__cidade-atual" aria-haspopup="true" aria-expanded="false">
+                                    <svg class="icone-pin" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M8 .8A7.2 7.2 0 0 0 .8 8c0 5.4 7.2 11.2 7.2 11.2S15.2 13.4 15.2 8A7.2 7.2 0 0 0 8 .8Zm0 9.8A2.6 2.6 0 1 1 8 5.4a2.6 2.6 0 0 1 0 5.2Z" fill="#00509F"/></svg>
+                                    <?php echo esc_html($cidade_atual); ?>
+                                    <svg class="icone-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1.5 7 7.5 13 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                                <ul class="header__submenu header__cidade-lista">
+                                    <?php foreach ($cidades as $c) : ?>
+                                        <li class="header__submenu-item">
+                                            <a href="<?php echo esc_url($c['url']); ?>" class="header__submenu-link<?php echo $c['atual'] ? ' header__submenu-link--atual' : ''; ?>"><?php echo esc_html($c['nome']); ?></a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php elseif ($cidade_atual) : ?>
                             <a href="#" class="header__cidade">
                                 <svg class="icone-pin" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M8 .8A7.2 7.2 0 0 0 .8 8c0 5.4 7.2 11.2 7.2 11.2S15.2 13.4 15.2 8A7.2 7.2 0 0 0 8 .8Zm0 9.8A2.6 2.6 0 1 1 8 5.4a2.6 2.6 0 0 1 0 5.2Z" fill="#00509F"/></svg>
-                                <?php echo esc_html($city); ?>
+                                <?php echo esc_html($cidade_atual); ?>
                                 <svg class="icone-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1.5 7 7.5 13 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </a>
                         <?php endif; ?>

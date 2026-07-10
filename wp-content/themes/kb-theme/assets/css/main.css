@@ -404,7 +404,7 @@ button:focus-visible {
   display: block;
   padding: 11px 0;
   font-size: 14px;
-  color: var(--cor-cinza-texto);
+  color: var(--cor-cinza-escuro);
   transition: color var(--transicao);
 }
 
@@ -468,6 +468,40 @@ button:focus-visible {
 
 .header__cidade:hover {
   opacity: .75;
+}
+
+/* Seletor de cidades (Multisite) */
+.header__cidade--menu {
+  position: relative;
+}
+
+.header__cidade-atual {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-azul);
+  cursor: pointer;
+  transition: opacity var(--transicao);
+}
+
+.header__cidade-atual .icone-chevron {
+  color: var(--cor-verde);
+  transition: transform var(--transicao);
+}
+
+.header__cidade-atual:hover {
+  opacity: .75;
+}
+
+.header__submenu-link--atual {
+  color: var(--cor-azul);
+  font-weight: 600;
 }
 
 @media (min-width: 769px) {
@@ -553,6 +587,35 @@ button:focus-visible {
   }
 
   .header__menu-item--tem-submenu:hover .header__menu-link .icone-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Seletor de cidades: ocupa a altura da barra e ancora o dropdown na base */
+  .header__acoes {
+    align-self: stretch;
+  }
+
+  .header__cidade--menu {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Reaproveita a caixa do submenu, mas alinhada à direita do trigger */
+  .header__cidade-lista {
+    left: auto;
+    right: 0;
+    transform: none;
+    min-width: 180px;
+  }
+
+  .header__cidade--menu:hover .header__cidade-lista,
+  .header__cidade--menu:focus-within .header__cidade-lista {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header__cidade--menu:hover .header__cidade-atual .icone-chevron {
     transform: rotate(180deg);
   }
 }

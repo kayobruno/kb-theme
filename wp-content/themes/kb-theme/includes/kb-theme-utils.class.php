@@ -187,6 +187,52 @@ class KB_Theme_Utils {
     }
 
     /**
+     * Retorna as cidades da rede (Multisite): cada subsite é uma cidade.
+     *
+     * O rótulo vem do campo ACF `city` de cada site (armazenado como option
+     * `options_city`), com fallback para o nome do site. Usa get_blog_option/
+     * get_home_url para ler cada site sem switch_to_blog (evita o cache de
+     * options do ACF entre sites). Retorna [] fora de Multisite.
+     *
+     * @return array Lista de ['id','nome','url','atual']
+     */
+    public static function cities(): array
+    {
+        if (!is_multisite()) {
+            return array();
+        }
+
+        // Não filtra por 'public' (isso é só visibilidade em buscadores);
+        // cada subsite é uma cidade e deve aparecer no seletor.
+        $sites = get_sites(array(
+            'archived' => 0,
+            'deleted'  => 0,
+            'spam'     => 0,
+            'number'   => 100,
+        ));
+        $current = get_current_blog_id();
+        $data = array();
+
+        foreach ($sites as $site) {
+            $id = (int) $site->blog_id;
+            $nome = get_blog_option($id, 'options_city');
+            if (empty($nome)) {
+                $details = get_blog_details($id);
+                $nome = $details ? $details->blogname : ('Site ' . $id);
+            }
+
+            $data[] = array(
+                'id'    => $id,
+                'nome'  => $nome,
+                'url'   => get_home_url($id, '/'),
+                'atual' => $id === $current,
+            );
+        }
+
+        return $data;
+    }
+
+    /**
      * Retorna os atributos target/rel de um item de menu, respeitando a
      * opção nativa "Abrir link em nova aba" do editor de menus do WordPress.
      *
