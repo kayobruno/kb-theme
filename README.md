@@ -26,7 +26,9 @@ Menu **Theme Options** no admin (página de opções do ACF). Vale para o site i
 ## Header
 
 - **Logo**: Theme Options → Mídia → Logo Principal.
-- **Menu**: **Aparência → Menus**, atribua um menu à location **Principal**. Itens com submenu ganham a setinha (chevron) automaticamente.
+- **Menu**: **Aparência → Menus**, atribua um menu à location **Principal**. Itens com submenu ganham a setinha (chevron) automaticamente e, no desktop, o submenu aparece como um box branco flutuante abaixo do item (no mobile ele fica recuado dentro do painel).
+- **Abrir item em nova aba**: use a opção nativa **"Abrir link em uma nova aba"** de cada item de menu (ative-a em **Opções de tela**, no topo direito da tela de Menus).
+- **Item de submenu como imagem** (ex.: badges Google Play / App Store na "Área do cliente"): no item de submenu, marque a classe CSS **`menu-imagem`** (ou `menu-image`) e cole a **URL da imagem** no campo **Descrição** (envie a imagem em **Mídia → Adicionar** e copie a URL do arquivo). O texto do rótulo vira o `alt`. Os campos **Classes CSS** e **Descrição** também são ativados em **Opções de tela**. Sem a classe/URL, o item continua exibido como texto.
 - **Botão "Assine fácil"**: abre o WhatsApp cadastrado em Theme Options → Contato.
 - **Cidade**: Theme Options → Contato → Cidade (se vazio, não é exibida).
 

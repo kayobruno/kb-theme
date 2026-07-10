@@ -384,10 +384,61 @@ button:focus-visible {
 
 .header__menu-link .icone-chevron {
   color: var(--cor-verde);
+  transition: transform var(--transicao);
 }
 
 .header__menu-link:hover {
   color: var(--cor-azul);
+}
+
+/* ---- Submenu (dropdown) ---- */
+/* Base/mobile: lista aninhada e recuada, sempre visível dentro do painel */
+.header__submenu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 0 4px 14px;
+}
+
+.header__submenu-link {
+  display: block;
+  padding: 11px 0;
+  font-size: 14px;
+  color: var(--cor-cinza-texto);
+  transition: color var(--transicao);
+}
+
+/* Linha separando os itens de texto (não os de imagem, nem o último) */
+.header__submenu-item:not(:last-child) {
+  border-bottom: 1px solid var(--cor-cinza-borda);
+}
+
+/* Compound para vencer a especificidade de :not(:last-child) — badges de
+   imagem nunca têm linha entre si */
+.header__submenu-item.header__submenu-item--imagem {
+  border-bottom: 0;
+}
+
+/* Primeiro item em destaque (azul), como na referência */
+.header__submenu-item:first-child .header__submenu-link {
+  color: var(--cor-azul);
+}
+
+.header__submenu-link:hover,
+.header__submenu-item:focus-within > .header__submenu-link {
+  color: var(--cor-azul);
+}
+
+.header__submenu-item--imagem .header__submenu-link {
+  padding: 8px 0;
+}
+
+.header__submenu-item--imagem img {
+  display: block;
+  width: 100%;
+  max-width: 170px;
+  height: auto;
+  border-radius: 8px;
 }
 
 .header__acoes {
@@ -438,6 +489,7 @@ button:focus-visible {
     display: flex;
     flex-direction: row;
     align-items: center;
+    align-self: stretch; /* ocupa toda a altura do header */
     justify-content: space-between;
     flex: 1;
     gap: 20px;
@@ -449,8 +501,59 @@ button:focus-visible {
 
   .header__menu {
     flex-direction: row;
-    align-items: center;
+    align-items: stretch; /* itens ocupam a altura do header */
+    align-self: stretch;
     gap: 44px;
+  }
+
+  /* Item ocupa a altura da barra e centraliza o link; assim o submenu
+     (top: 100%) ancora na base do header, não no meio da barra */
+  .header__menu-item {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Desktop: submenu vira box branco flutuante abaixo do item */
+  .header__menu-item--tem-submenu {
+    position: relative;
+  }
+
+  .header__submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    min-width: 220px;
+    margin: 15px 0 0;
+    padding: 4px 24px;
+    background: var(--cor-branco);
+    border-radius: 18px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .14);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transicao), visibility var(--transicao);
+    z-index: 60;
+  }
+
+  /* Ponte transparente sobre o vão, para o hover não cair ao descer o mouse */
+  .header__submenu::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+  }
+
+  .header__menu-item--tem-submenu:hover .header__submenu,
+  .header__menu-item--tem-submenu:focus-within .header__submenu {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header__menu-item--tem-submenu:hover .header__menu-link .icone-chevron {
+    transform: rotate(180deg);
   }
 }
 

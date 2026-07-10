@@ -42,14 +42,36 @@
 
                 <nav class="header__nav" id="menu-principal" aria-label="Menu principal">
                     <ul class="header__menu">
-                        <?php foreach ($menu_items as $item) : ?>
-                            <li class="header__menu-item">
-                                <a href="<?php echo esc_url($item->url); ?>" class="header__menu-link">
+                        <?php foreach ($menu_items as $item) :
+                            $tem_submenu = !empty($item->children);
+                        ?>
+                            <li class="header__menu-item<?php echo $tem_submenu ? ' header__menu-item--tem-submenu' : ''; ?>">
+                                <a href="<?php echo esc_url($item->url); ?>" class="header__menu-link"<?php echo KB_Theme_Utils::menuLinkAttrs($item); ?><?php echo $tem_submenu ? ' aria-haspopup="true"' : ''; ?>>
                                     <?php echo esc_html($item->title); ?>
-                                    <?php if (!empty($item->children)) : ?>
+                                    <?php if ($tem_submenu) : ?>
                                         <svg class="icone-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1.5 7 7.5 13 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     <?php endif; ?>
                                 </a>
+
+                                <?php if ($tem_submenu) : ?>
+                                    <ul class="header__submenu">
+                                        <?php foreach ($item->children as $child) :
+                                            $classes = (array) $child->classes;
+                                            $imagem = trim((string) $child->description);
+                                            $eh_imagem = (bool) array_intersect(array('menu-imagem', 'menu-image'), $classes) && '' !== $imagem;
+                                        ?>
+                                            <li class="header__submenu-item<?php echo $eh_imagem ? ' header__submenu-item--imagem' : ''; ?>">
+                                                <a href="<?php echo esc_url($child->url); ?>" class="header__submenu-link"<?php echo KB_Theme_Utils::menuLinkAttrs($child); ?>>
+                                                    <?php if ($eh_imagem) : ?>
+                                                        <img src="<?php echo esc_url($imagem); ?>" alt="<?php echo esc_attr($child->title); ?>" loading="lazy">
+                                                    <?php else : ?>
+                                                        <?php echo esc_html($child->title); ?>
+                                                    <?php endif; ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>

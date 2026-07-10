@@ -187,6 +187,28 @@ class KB_Theme_Utils {
     }
 
     /**
+     * Retorna os atributos target/rel de um item de menu, respeitando a
+     * opção nativa "Abrir link em nova aba" do editor de menus do WordPress.
+     *
+     * @param object $item Item de menu (com propriedade ->target)
+     * @return string Atributos prontos para injetar na tag <a> (ex.: ' target="_blank" rel="noopener noreferrer"')
+     */
+    public static function menuLinkAttrs($item): string
+    {
+        $target = !empty($item->target) ? (string) $item->target : '';
+        if ('' === $target) {
+            return '';
+        }
+
+        $attrs = ' target="' . esc_attr($target) . '"';
+        if ('_blank' === $target) {
+            $attrs .= ' rel="noopener noreferrer"';
+        }
+
+        return $attrs;
+    }
+
+    /**
      * Renderiza o preço de um plano.
      *
      * Quando um preço de oferta é informado, o valor grande passa a ser a
