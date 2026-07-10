@@ -53,7 +53,7 @@ $assets = get_template_directory_uri() . '/assets';
                                                 <?php echo KB_Theme_Utils::renderPrice((string) get_field('preco', $banner_plano_id)); ?>
                                             </p>
                                         </div>
-                                        <a href="<?php echo esc_url($banner['link'] ?: $whatsapp_link); ?>" class="botao botao--pill hero__botao">
+                                        <a href="<?php echo esc_url($banner['link'] ?: $whatsapp_link); ?>" class="botao botao--pill hero__botao" target="_blank" rel="noopener noreferrer">
                                             <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
                                             Assine já
                                         </a>
@@ -128,7 +128,7 @@ $assets = get_template_directory_uri() . '/assets';
                             <p class="plano__preco<?php echo $tem_oferta ? ' plano__preco--oferta' : ''; ?>">
                                 <?php echo KB_Theme_Utils::renderPrice(get_field('preco'), $preco_oferta); ?>
                             </p>
-                            <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao plano__botao">
+                            <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao plano__botao" target="_blank" rel="noopener noreferrer">
                                 <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
                                 Chame no Whatsapp
                             </a>
@@ -179,7 +179,7 @@ $assets = get_template_directory_uri() . '/assets';
                     <p class="escolher__kicker"><?php the_field('escolher_kicker'); ?></p>
                     <h3 class="escolher__titulo"><span class="escolher__titulo-verde"><?php the_field('escolher_titulo_destaque'); ?></span><br><?php the_field('escolher_titulo_banner'); ?></h3>
                     <p class="escolher__texto"><?php echo nl2br(esc_html((string) get_field('escolher_texto'))); ?></p>
-                    <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao escolher__botao">
+                    <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao escolher__botao" target="_blank" rel="noopener noreferrer">
                         <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
                         <?php the_field('escolher_botao_texto'); ?>
                     </a>
@@ -252,7 +252,7 @@ $assets = get_template_directory_uri() . '/assets';
                             while ($query->have_posts()) :
                                 $query->the_post();
                                 ?>
-                                <li class="empresas__item"><a href="<?php the_field('link'); ?>" class="empresas__card"><img src="<?php echo KB_Theme_Utils::thumbnail(null, 'medium'); ?>" alt="<?php the_title_attribute(); ?>" width="134" height="76" loading="lazy"></a></li>
+                                <li class="empresas__item"><a href="<?php the_field('link'); ?>" class="empresas__card" target="_blank" rel="noopener noreferrer"><img src="<?php echo KB_Theme_Utils::thumbnail(null, 'medium'); ?>" alt="<?php the_title_attribute(); ?>" width="134" height="76" loading="lazy"></a></li>
                             <?php
                             endwhile;
                             wp_reset_postdata();
@@ -290,7 +290,7 @@ $assets = get_template_directory_uri() . '/assets';
                 </p>
                 <p class="depoimentos__observacao"><?php echo nl2br(esc_html((string) get_field('depoimentos_observacao'))); ?></p>
 
-                <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao depoimentos__botao">
+                <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao depoimentos__botao" target="_blank" rel="noopener noreferrer">
                     <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
                     <?php the_field('depoimentos_botao_texto'); ?>
                 </a>
@@ -360,7 +360,7 @@ $assets = get_template_directory_uri() . '/assets';
             <?php endif; ?>
         </div>
 
-        <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao botao--azul vitrine__whats">
+        <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao botao--azul vitrine__whats" target="_blank" rel="noopener noreferrer">
             <?php echo KB_Theme_Utils::renderWhatsappIcon(); ?>
             Chama no WhatsApp
         </a>
@@ -383,7 +383,7 @@ $assets = get_template_directory_uri() . '/assets';
                             <span><?php echo esc_html($canal['texto']); ?></span>
                         </a>
                     <?php endforeach; ?>
-                    <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao atendimento__contrate">
+                    <a href="<?php echo esc_url($whatsapp_link); ?>" class="botao atendimento__contrate" target="_blank" rel="noopener noreferrer">
                         <?php echo KB_Theme_Utils::renderWhatsappIcon(22); ?>
                         <span>Contrate já</span>
                     </a>
@@ -397,10 +397,10 @@ $assets = get_template_directory_uri() . '/assets';
                         <p class="atendimento__app-texto"><?php echo nl2br(esc_html((string) get_field('app_texto'))); ?></p>
                         <div class="atendimento__lojas">
                             <?php if ($google_play = get_field('app_google_play')) : ?>
-                                <a href="<?php echo esc_url($google_play); ?>" aria-label="Baixar na Google Play"><img src="<?php echo esc_url($assets . '/btn-google-play.png'); ?>" alt="Disponível no Google Play" width="105" height="38" loading="lazy"></a>
+                                <a href="<?php echo esc_url($google_play); ?>" aria-label="Baixar na Google Play"><img src="<?php echo esc_url($assets . '/images/btn-google-play.png'); ?>" alt="Disponível no Google Play" width="105" height="38" loading="lazy"></a>
                             <?php endif; ?>
                             <?php if ($app_store = get_field('app_app_store')) : ?>
-                                <a href="<?php echo esc_url($app_store); ?>" aria-label="Baixar na App Store"><img src="<?php echo esc_url($assets . '/btn-app-store.png'); ?>" alt="Disponível na App Store" width="106" height="38" loading="lazy"></a>
+                                <a href="<?php echo esc_url($app_store); ?>" aria-label="Baixar na App Store"><img src="<?php echo esc_url($assets . '/images/btn-app-store.png'); ?>" alt="Disponível na App Store" width="106" height="38" loading="lazy"></a>
                             <?php endif; ?>
                         </div>
                     </div>

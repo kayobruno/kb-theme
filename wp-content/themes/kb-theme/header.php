@@ -55,7 +55,7 @@
                     </ul>
 
                     <div class="header__acoes">
-                        <a href="<?php echo esc_url(KB_Theme_Utils::whatsapp_link()); ?>" class="botao botao--pill header__assine">
+                        <a href="<?php echo esc_url(KB_Theme_Utils::whatsapp_link()); ?>" class="botao botao--pill header__assine" target="_blank" rel="noopener noreferrer">
                             <?php echo KB_Theme_Utils::renderWhatsappIcon(14); ?>
                             Assine fácil
                         </a>
