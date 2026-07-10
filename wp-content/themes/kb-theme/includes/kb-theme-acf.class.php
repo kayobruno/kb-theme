@@ -226,6 +226,26 @@ class KB_Theme_Acf {
             'title' => 'Seções da Página Inicial',
             'fields' => array(
                 array(
+                    'key' => 'group_planos',
+                    'label' => 'Planos',
+                    'type' => 'tab',
+                    'placement' => 'top',
+                ),
+                array(
+                    'key' => 'home_titulo_planos',
+                    'label' => 'Título da seção Planos',
+                    'name' => 'titulo_planos',
+                    'type' => 'text',
+                ),
+                array(
+                    'key' => 'home_descricao_planos',
+                    'label' => 'Descrição da seção Planos',
+                    'name' => 'descricao_planos',
+                    'type' => 'textarea',
+                    'rows' => 3,
+                    'new_lines' => '',
+                ),
+                array(
                     'key' => 'group_escolher',
                     'label' => 'Por que escolher',
                     'type' => 'tab',
@@ -635,28 +655,35 @@ class KB_Theme_Acf {
     }
 
     /**
-     * Registra os campos complementares do post type Plano
+     * Registra os campos do post type Plano.
      *
-     * Os campos originais (megas, preco, beneficios, img_beneficios,
-     * plano_destaque, selo_destaque) foram criados via painel do ACF e
-     * permanecem gravados no banco. Aqui adicionamos apenas os campos novos.
+     * Todos os campos são definidos em código (fonte única de verdade, essencial
+     * para funcionar em todos os subsites do Multisite). Os campos originais
+     * (megas, preco, beneficios, img_beneficios, plano_destaque, selo_destaque)
+     * foram migrados do painel do ACF mantendo o mesmo `name`, então os valores
+     * já gravados continuam válidos.
      */
     private function plano_fields()
     {
         if (function_exists('acf_add_local_field_group')) {
             acf_add_local_field_group(array(
                 'key' => 'fields_plano',
-                'title' => 'Informações complementares do Plano',
+                'title' => 'Informações do Plano',
                 'fields' => array(
                     array(
-                        'key' => 'plano_galeria_beneficios',
-                        'label' => 'Galeria "Incluso no plano"',
-                        'name' => 'galeria_beneficios',
-                        'type' => 'gallery',
-                        'instructions' => 'Imagens exibidas em "Incluso no seu plano". Quando houver mais de uma, elas passam automaticamente em slide dentro do card. Se ficar vazio, é usada a imagem única do campo antigo.',
-                        'return_format' => 'array',
-                        'preview_size' => 'thumbnail',
-                        'library' => 'all',
+                        'key' => 'plano_megas',
+                        'label' => 'Megas',
+                        'name' => 'megas',
+                        'type' => 'number',
+                        'instructions' => 'Velocidade do plano em MEGA (apenas o número).',
+                        'min' => 0,
+                    ),
+                    array(
+                        'key' => 'plano_preco',
+                        'label' => 'Preço',
+                        'name' => 'preco',
+                        'type' => 'text',
+                        'instructions' => 'Mensalidade no formato 79,90.',
                     ),
                     array(
                         'key' => 'plano_preco_oferta',
@@ -666,18 +693,81 @@ class KB_Theme_Acf {
                         'instructions' => 'Opcional. Use o mesmo formato do preço normal (ex.: 79,90). Quando preenchido, o card mostra "de R$ [preço] por apenas R$ [oferta]", com a oferta em destaque.',
                     ),
                     array(
+                        'key' => 'plano_beneficios',
+                        'label' => 'Benefícios (Incluso no seu plano)',
+                        'name' => 'beneficios',
+                        'type' => 'wysiwyg',
+                        'instructions' => 'Use uma lista com marcadores; cada item da lista vira um benefício no card.',
+                        'tabs' => 'visual',
+                        'toolbar' => 'basic',
+                        'media_upload' => 0,
+                    ),
+                    array(
+                        'key' => 'plano_galeria_beneficios',
+                        'label' => 'Galeria "Incluso no plano"',
+                        'name' => 'galeria_beneficios',
+                        'type' => 'gallery',
+                        'instructions' => 'Imagens exibidas em "Incluso no seu plano". Quando houver mais de uma, elas passam automaticamente em slide dentro do card. Se ficar vazio, é usada a imagem única do campo abaixo.',
+                        'return_format' => 'array',
+                        'preview_size' => 'thumbnail',
+                        'library' => 'all',
+                    ),
+                    array(
+                        'key' => 'plano_img_beneficios',
+                        'label' => 'Imagem de benefícios (fallback)',
+                        'name' => 'img_beneficios',
+                        'type' => 'image',
+                        'instructions' => 'Imagem única de "Incluso no plano". Usada apenas quando a Galeria acima está vazia (e também no card de oferta do hero).',
+                        'return_format' => 'url',
+                        'preview_size' => 'thumbnail',
+                        'library' => 'all',
+                    ),
+                    array(
+                        'key' => 'plano_destaque_flag',
+                        'label' => 'Plano em destaque?',
+                        'name' => 'plano_destaque',
+                        'type' => 'true_false',
+                        'instructions' => 'Marca este plano como destaque (ganha o selo no card).',
+                        'ui' => 1,
+                    ),
+                    array(
+                        'key' => 'plano_selo_destaque',
+                        'label' => 'Texto do selo de destaque',
+                        'name' => 'selo_destaque',
+                        'type' => 'text',
+                        'instructions' => 'Ex.: MAIS PROCURADO. Exibido apenas quando o plano está em destaque.',
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'plano_destaque_flag',
+                                    'operator' => '==',
+                                    'value' => '1',
+                                ),
+                            ),
+                        ),
+                    ),
+                    array(
                         'key' => 'plano_cor_selo',
                         'label' => 'Cor da tag de destaque',
                         'name' => 'cor_selo',
                         'type' => 'color_picker',
-                        'instructions' => 'Cor de fundo da tag de destaque (selo) exibida nos planos em destaque. Se ficar vazio, usa a cor padrão do tema.',
+                        'instructions' => 'Cor de fundo da tag de destaque (selo). Se ficar vazio, usa a cor padrão do tema.',
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'plano_destaque_flag',
+                                    'operator' => '==',
+                                    'value' => '1',
+                                ),
+                            ),
+                        ),
                     ),
                     array(
                         'key' => 'plano_condicoes',
                         'label' => 'Condições e mais detalhes',
                         'name' => 'condicoes',
                         'type' => 'wysiwyg',
-                        'instructions' => 'Texto jurídico/condições exibido em um box ao clicar em "Condições e mais detalhes". Se ficar vazio, o link não aparece.',
+                        'instructions' => 'Texto jurídico/condições exibido em um modal ao clicar em "Condições e mais detalhes". Se ficar vazio, o link não aparece.',
                         'tabs' => 'all',
                         'toolbar' => 'full',
                         'media_upload' => 0,
