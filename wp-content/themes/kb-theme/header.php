@@ -94,7 +94,7 @@
                             Assine fácil
                         </a>
                         <?php if (count($cidades) > 1) : ?>
-                            <div class="header__cidade header__cidade--menu">
+                            <div class="header__cidade--menu">
                                 <button type="button" class="header__cidade-atual" aria-haspopup="true" aria-expanded="false">
                                     <svg class="icone-pin" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M8 .8A7.2 7.2 0 0 0 .8 8c0 5.4 7.2 11.2 7.2 11.2S15.2 13.4 15.2 8A7.2 7.2 0 0 0 8 .8Zm0 9.8A2.6 2.6 0 1 1 8 5.4a2.6 2.6 0 0 1 0 5.2Z" fill="#00509F"/></svg>
                                     <?php echo esc_html($cidade_atual); ?>

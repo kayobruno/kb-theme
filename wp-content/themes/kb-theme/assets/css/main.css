@@ -601,12 +601,17 @@ button:focus-visible {
     align-items: center;
   }
 
-  /* Reaproveita a caixa do submenu, mas alinhada à direita do trigger */
+  /* Reaproveita a caixa do submenu, mas alinhada à direita do trigger.
+     Fundo branco 100% opaco + borda + sombra reforçada para o nome da
+     cidade ficar legível mesmo com texto do banner atrás. */
   .header__cidade-lista {
     left: auto;
     right: 0;
     transform: none;
     min-width: 180px;
+    background: #ffffff;
+    border: 1px solid var(--cor-cinza-borda);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .22);
   }
 
   .header__cidade--menu:hover .header__cidade-lista,
