@@ -14,18 +14,22 @@ class KB_Theme_Assets {
 
     private function enqueue_styles()
     {
+        $path = get_template_directory() . '/assets/css/main.css';
         $src = get_template_directory_uri() . '/assets/css/main.css';
-        wp_enqueue_style('main', $src, array(), '1.0', 'all');
+        // Versão pelo mtime do arquivo: cache-busting automático a cada alteração
+        $version = file_exists($path) ? filemtime($path) : '1.0';
+        wp_enqueue_style('main', $src, array(), $version, 'all');
     }
 
     private function enqueue_scripts()
     {
+        $js_path = get_template_directory() . '/assets/js/main.js';
         $scripts = array(
             array(
                 'handle' => 'main',
                 'src' => get_template_directory_uri() . '/assets/js/main.js',
                 'dependencies' => array('jquery'),
-                'version' => '1.0',
+                'version' => file_exists($js_path) ? filemtime($js_path) : '1.0',
                 'in_footer' => true,
             ),
         );
